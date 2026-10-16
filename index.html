@@ -94,8 +94,6 @@ header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(
 .rail a{display:flex;align-items:center;justify-content:flex-end;gap:10px;text-decoration:none}
 .rail a span{font-family:var(--wide);font-weight:700;font-size:9px;letter-spacing:.16em;text-transform:uppercase;opacity:0;transform:translateX(6px);transition:all .25s;white-space:nowrap}
 .rail a:hover span,.rail a.active span{opacity:1;transform:none}
-.rail a b{width:4px;height:28px;border-radius:4px;background:rgba(240,233,220,.2);transition:all .3s}
-.rail a.active b{height:46px;background:var(--c);box-shadow:0 0 16px var(--c)}
 @media (max-width:700px){.rail{display:none}}
 
 /* ---------- Hero ---------- */
@@ -220,6 +218,7 @@ header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(
 .steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--display);font-weight:900;font-style:italic;font-size:34px;line-height:.9}
 .steps strong{display:block;font-family:var(--sub);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
 .steps span{color:rgba(4,23,14,.72);font-size:15px}
+.booklink{display:block;font-family:var(--wide);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;color:#04170e}
 .note{margin-top:18px;font-size:15px;color:rgba(4,23,14,.78);padding-left:16px;border-left:2px solid #04170e}
 @media (max-width:900px){.rooms,.split{grid-template-columns:1fr}.shots{grid-template-columns:1fr 1fr}.frame:first-child{grid-column:span 2;grid-row:auto;min-height:240px}}
 
@@ -268,6 +267,146 @@ header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(
 .t figcaption::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
 @media (max-width:860px){.live-head{grid-template-columns:1fr}.bento{grid-template-columns:1fr 1fr;grid-auto-rows:46vw}.t.big{grid-row:span 1}}
 
+
+/* ---------- Music UI: timeline, player, mixer rail ---------- */
+.timeline{display:flex;align-items:center;gap:14px;height:22px;padding-left:var(--pad-l);padding-right:var(--pad-r);max-width:1280px;margin:0 auto;opacity:0;transition:opacity .3s}
+header.top.solid .timeline{opacity:1}
+.tl-track{flex:1;height:10px;position:relative;border-radius:2px;overflow:hidden;
+  background:repeating-linear-gradient(90deg,rgba(240,233,220,.28) 0 1px,transparent 1px calc(100%/16)),repeating-linear-gradient(90deg,rgba(240,233,220,.1) 0 1px,transparent 1px calc(100%/64));}
+.tl-head{position:absolute;left:0;top:0;bottom:0;width:100%;transform:translateX(0)}
+.tl-head::before{content:"";position:absolute;left:0;top:-2px;bottom:-2px;width:2px;background:var(--b1);box-shadow:0 0 10px var(--b1);margin-left:-1px}
+.tl-head::after{content:"";position:absolute;right:100%;top:3px;height:4px;width:100vw;background:var(--spectrum);opacity:.55}
+.tl-count{font-family:var(--wide);font-weight:700;font-size:9.5px;letter-spacing:.16em;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:600px){.tl-count{display:none}}
+.play{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(240,233,220,.35);background:rgba(2,10,6,.5);color:var(--egg);border-radius:999px;cursor:pointer;font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.16em;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .25s,border-color .25s,color .25s}
+.play:hover{border-color:var(--b1)}
+.play.on{background:var(--b1);color:#04170e;border-color:var(--b1)}
+.play.big{margin-top:30px;padding:16px 26px 16px 20px;font-size:12px}
+.eqi{display:inline-flex;gap:3px;align-items:flex-end;height:16px;width:22px}
+.eqi i{flex:1;background:currentColor;border-radius:1px;height:30%;transition:height .08s}
+.play:not(.on) .eqi i:nth-child(1){height:40%}.play:not(.on) .eqi i:nth-child(2){height:75%}.play:not(.on) .eqi i:nth-child(3){height:55%}.play:not(.on) .eqi i:nth-child(4){height:30%}
+.play.on .eqi i{animation:eqb .5s ease-in-out infinite alternate}
+.play.on .eqi i:nth-child(2){animation-delay:-.2s}.play.on .eqi i:nth-child(3){animation-delay:-.35s}.play.on .eqi i:nth-child(4){animation-delay:-.1s}
+@keyframes eqb{from{height:20%}to{height:100%}}
+.play.dock{position:fixed;z-index:45;left:max(18px,env(safe-area-inset-left,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));padding:11px 16px 11px 14px;font-size:10px;box-shadow:0 10px 40px rgba(0,0,0,.45)}
+.play.dock .bpm{opacity:.6;font-weight:500}
+.play.dock{transition:opacity .3s,transform .3s,background .25s,border-color .25s,color .25s}
+html.in-book .play.dock{opacity:0;transform:translateY(20px);pointer-events:none}
+.cal{scroll-margin-top:110px}
+.rail a b{width:6px;height:46px;border-radius:3px;background:rgba(240,233,220,.12);position:relative;overflow:hidden;display:block;transition:none}
+.rail a b i{position:absolute;left:0;right:0;bottom:0;height:10%;background:linear-gradient(0deg,var(--c),color-mix(in srgb,var(--c) 60%,#fff));box-shadow:0 0 12px var(--c)}
+.rail a.active b{height:64px;background:rgba(240,233,220,.18);box-shadow:none}
+.hero .logo3d img{transform-origin:50% 60%}
+html.playing .hero .logo3d{transform:scale(calc(1 + var(--kick,0) * .03));transition:transform .05s}
+
+
+/* ---------- Booking ---------- */
+.book{padding-block:clamp(80px,10vw,140px);background:linear-gradient(180deg,#04170e,var(--night) 60%)}
+.book h2{font-size:clamp(64px,10vw,150px)}
+.book-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:end}
+.book-head p{max-width:46ch;font-size:clamp(16px,1.3vw,19px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.booker{margin-top:clamp(36px,5vw,60px);background:#06140d;border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,36px);scroll-margin-top:110px}
+.booker fieldset{border:0;margin:0;padding:0;min-width:0}
+.stepper{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stepper li{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-top:12px;border-top:3px solid rgba(240,233,220,.12);display:flex;gap:8px;transition:all .3s}
+.stepper li b{color:inherit}
+.stepper li.on{color:var(--egg);border-top-color:var(--b1)}
+.stepper li.done{color:var(--b1);border-top-color:color-mix(in srgb,var(--b1) 45%,transparent)}
+.rooms-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rp{position:relative;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;background:#020a06;border:1px solid var(--line);cursor:pointer;transition:border-color .25s,transform .3s;min-width:0}
+.rp:hover{transform:translateY(-4px)}
+.rp input{position:absolute;opacity:0;pointer-events:none}
+.rp-img{display:block;aspect-ratio:4/3;overflow:hidden;max-width:100%}
+.rp-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.85);transition:filter .3s}
+.rp-body{display:flex;flex-direction:column;gap:6px;padding:16px 18px 20px}
+.rp-body .k{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em;color:var(--c)}
+.rp-body b{font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(30px,2.8vw,40px);line-height:.9}
+.rp-body span:last-child{color:var(--muted);font-size:14.5px}
+.rp:has(input:checked){border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 20px 60px -25px var(--c)}
+.rp:has(input:checked) .rp-img img{filter:none}
+.rp:has(input:checked)::after{content:"SELECTED";position:absolute;top:12px;right:12px;font-family:var(--wide);font-weight:700;font-size:9px;letter-spacing:.18em;background:var(--c);color:#04170e;padding:6px 9px;border-radius:999px}
+.rp:has(input:focus-visible){outline:2px solid var(--c);outline-offset:3px}
+.bnav{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
+.bbtn{font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:11px;padding:15px 22px;border-radius:999px;border:1px solid rgba(240,233,220,.3);background:transparent;color:var(--egg);cursor:pointer}
+.bbtn.solid{background:var(--b1);border-color:var(--b1);color:#04170e}
+.bbtn:disabled{opacity:.6;cursor:progress}
+.cal-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(16px,3vw,36px)}
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-top b{font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:30px}
+.cal-nav{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--egg);cursor:pointer;font-size:16px}
+.cal-nav:disabled{opacity:.25;cursor:default}
+.cal-dow,.cal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.cal-dow span{font-family:var(--wide);font-weight:700;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-bottom:6px}
+.cd{aspect-ratio:1.25;border-radius:10px;border:1px solid var(--line);background:#020a06;color:var(--egg);display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;padding:7px 9px;cursor:pointer;font-variant-numeric:tabular-nums;transition:border-color .2s,background .2s}
+.cd.pad{border:0;background:none;cursor:default}
+.cd b{font-family:var(--sub);font-weight:800;font-size:16px}
+.cd i{width:100%;height:4px;border-radius:2px}
+.cd.open i{background:var(--b1)}
+.cd.limited i{background:repeating-linear-gradient(90deg,var(--b2) 0 5px,transparent 5px 8px)}
+.cd.full,.cd.closed{opacity:.35;cursor:not-allowed}
+.cd.full i,.cd.closed i{background:repeating-linear-gradient(135deg,rgba(240,233,220,.5) 0 2px,transparent 2px 5px)}
+.cd:not(:disabled):hover{border-color:var(--b1)}
+.cd.sel{background:var(--b1);color:#04170e;border-color:var(--b1)}
+.cd.sel i{background:#04170e}
+.cal-key{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:13px;color:var(--muted)}
+.cal-key span{display:flex;align-items:center;gap:8px}
+.cal-key i{width:18px;height:4px;border-radius:2px;display:block}
+.cal-key i.open{background:var(--b1)}.cal-key i.limited{background:repeating-linear-gradient(90deg,var(--b2) 0 5px,transparent 5px 8px)}.cal-key i.full{background:repeating-linear-gradient(135deg,rgba(240,233,220,.5) 0 2px,transparent 2px 5px)}
+.cal-note{margin-top:12px;font-size:13.5px;color:var(--muted);padding-left:12px;border-left:2px solid var(--b1)}
+.slots{display:flex;flex-direction:column;gap:10px}
+.slots .k{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em;color:var(--b1);min-height:2.4em;transition:color .2s}
+.slots .k.flash{color:var(--b4)}
+.slot-list{display:flex;flex-direction:column;gap:8px}
+.slot{display:block;cursor:pointer}
+.slot input{position:absolute;opacity:0}
+.slot span{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px;border-radius:12px;border:1px solid var(--line);background:#020a06;font-variant-numeric:tabular-nums;color:var(--muted);transition:all .2s}
+.slot b{font-family:var(--sub);font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--egg);font-size:16px}
+.slot input:checked+span{border-color:var(--b1);background:color-mix(in srgb,var(--b1) 14%,#020a06);color:var(--egg)}
+.slot input:disabled+span{opacity:.35;cursor:not-allowed}
+.slot.taken span::after{content:"Taken";font-family:var(--wide);font-weight:700;font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.slot input:focus-visible+span{outline:2px solid var(--b1);outline-offset:2px}
+.small{font-size:13.5px}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f.wide{grid-column:1/-1}
+.f span{font-family:var(--wide);font-weight:700;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.f em{font-style:normal;opacity:.6}
+.f input,.f select,.f textarea{font:inherit;font-size:16px;color:var(--egg);background:#020a06;border:1px solid var(--line);border-radius:12px;padding:13px 14px;width:100%}
+.f select option{background:#020a06}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--b1)}
+.hp{position:absolute;left:-9999px}
+.u18{margin-top:18px;padding:18px;border-radius:14px;border:1px solid var(--line)}
+.toggle{display:flex;align-items:center;gap:12px;cursor:pointer;font-family:var(--sub);font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.toggle input{position:absolute;opacity:0}
+.sw{width:42px;height:24px;border-radius:12px;background:rgba(240,233,220,.2);position:relative;transition:background .2s;flex:none}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--egg);transition:transform .2s}
+.toggle input:checked+.sw{background:var(--b5)}
+.toggle input:checked+.sw::after{transform:translateX(18px)}
+.toggle input:focus-visible+.sw{outline:2px solid var(--b5);outline-offset:2px}
+.u18-body p{margin:14px 0;color:var(--muted);max-width:60ch}
+.consents{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.check{display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:15px}
+.check input{width:20px;height:20px;accent-color:var(--b1);flex:none;margin-top:1px}
+.check.opt{color:var(--muted);padding-top:10px;border-top:1px dashed var(--line)}
+.ferr{margin-top:16px;color:#ffb3ba;font-size:15px;padding:12px 14px;border-radius:10px;background:rgba(255,59,78,.1);border:1px solid rgba(255,59,78,.35)}
+.review dl{margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:0 28px}
+.review dl div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);min-width:0}
+.review dt{font-family:var(--wide);font-weight:700;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.review dd{margin:0;text-align:right;overflow-wrap:anywhere}
+.review p{margin-top:16px}
+.bdone{padding:clamp(10px,2vw,20px) 0}
+.bdone .k{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em}
+.bdone h3{font-size:clamp(52px,7vw,96px);margin-top:14px}
+.bdone>p{margin-top:16px;max-width:56ch;color:var(--muted)}
+.ref{margin-top:22px;display:inline-flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;border:1px solid var(--b1)}
+.ref span{font-family:var(--wide);font-weight:700;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.ref code{font-family:var(--sub);font-weight:800;font-size:20px;letter-spacing:.06em;color:var(--b1)}
+.fallback{margin-top:22px;display:flex;flex-direction:column;gap:12px;max-width:640px}
+.fallback pre{margin:0;white-space:pre-wrap;font-family:var(--sub);font-weight:500;font-size:14px;background:#020a06;border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto;color:var(--egg)}
+@media (max-width:900px){.book-head,.cal-wrap{grid-template-columns:1fr}.rooms-pick{grid-template-columns:1fr}.rp{flex-direction:row}.rp-img{width:38%;aspect-ratio:auto;flex:none}.fields{grid-template-columns:1fr 1fr}.review dl{grid-template-columns:1fr}}
+@media (max-width:520px){.fields{grid-template-columns:1fr}.stepper li{font-size:8.5px;letter-spacing:.1em}.cd{padding:5px 6px}.cd b{font-size:14px}}
+
 /* ---------- Get in ---------- */
 .getin{padding-block:clamp(80px,10vw,140px);border-top:1px solid var(--line)}
 .getin h2{font-size:clamp(64px,10vw,150px)}
@@ -310,20 +449,22 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
       <a href="#purpose">Purpose</a>
       <a href="#spectrum">The spectrum</a>
       <a href="#studio">The Studio</a>
+      <a href="#book">Book</a>
       <a href="#season">Season one</a>
       <a href="#live">Live</a>
     </nav>
-    <a class="cta" href="#get-in">Get in</a>
+    <a class="cta" href="#book">Book the studio</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false">Menu</button>
   </div>
+  <div class="timeline" aria-hidden="true"><div class="tl-track"><div class="tl-head" id="tlHead"></div></div><span class="tl-count" id="tlCount">BAR 001.1 · 92 BPM</span></div>
 </header>
 
 <nav class="rail" id="rail" aria-label="Purpose beats">
-  <a href="#beat-1" style="--c:var(--b1)"><span>Find talent</span><b></b></a>
-  <a href="#beat-2" style="--c:var(--b2)"><span>Create and connect</span><b></b></a>
-  <a href="#beat-3" style="--c:var(--b3)"><span>Original music</span><b></b></a>
-  <a href="#beat-4" style="--c:var(--b4)"><span>Inspire more</span><b></b></a>
-  <a href="#beat-5" style="--c:var(--b5)"><span>Find their flavour</span><b></b></a>
+  <a href="#beat-1" style="--c:var(--b1)"><span>Find talent</span><b><i></i></b></a>
+  <a href="#beat-2" style="--c:var(--b2)"><span>Create and connect</span><b><i></i></b></a>
+  <a href="#beat-3" style="--c:var(--b3)"><span>Original music</span><b><i></i></b></a>
+  <a href="#beat-4" style="--c:var(--b4)"><span>Inspire more</span><b><i></i></b></a>
+  <a href="#beat-5" style="--c:var(--b5)"><span>Find their flavour</span><b><i></i></b></a>
 </nav>
 
 <main>
@@ -332,6 +473,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
     <p class="tag">Driven by sound</p>
     <div class="specbar" aria-hidden="true"></div>
     <p class="lede">Wingstop's home for new music. A studio to make it, stages to play it, and restaurants across the UK and Ireland to get it heard.</p>
+    <button class="play big" data-play type="button" aria-pressed="false"><span class="eqi" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pl">Play the session</span></button>
     <span class="scrollcue">Scroll to tune in</span>
   </section>
 
@@ -345,7 +487,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
 
   <section class="beat" id="beat-1" data-shape="1" style="--c:var(--b1)">
     <div class="wrap"><div class="panel reveal">
-      <span class="no">01 / 05</span>
+      <span class="no">TRK 01 · SIDE A</span>
       <h2>Find <em>talent.</em></h2>
       <p class="copy">In every city there's someone the industry hasn't caught yet. Our creative leads, partners and crews are out in the scenes, listening for the sound before the numbers arrive.</p>
       <div class="chips"><span>Scouting</span><span>Open submissions</span><span>Partner scenes</span></div>
@@ -355,7 +497,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
 
   <section class="beat right" id="beat-2" data-shape="2" style="--c:var(--b2)">
     <div class="wrap"><div class="panel reveal">
-      <span class="no">02 / 05</span>
+      <span class="no">TRK 02 · SIDE A</span>
       <h2>Create <em>&amp; connect.</em></h2>
       <p class="copy">Talent grows in company. We give artists the room, the kit and the time, then put them next to producers, writers and creators they would never otherwise meet.</p>
       <div class="chips"><span>Studio time</span><span>Writing camps</span><span>Collabs</span></div>
@@ -365,7 +507,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
 
   <section class="beat" id="beat-3" data-shape="3" style="--c:var(--b3)">
     <div class="wrap"><div class="panel reveal">
-      <span class="no">03 / 05</span>
+      <span class="no">TRK 03 · SIDE A</span>
       <h2>Original <em>music.</em></h2>
       <p class="copy">Everything that comes out of Flavour FM is new. Original tracks, original shows and original sessions, credited to the people who made them and released where their fans listen.</p>
       <div class="chips"><span>Records</span><span>Sessions</span><span>Shows</span></div>
@@ -375,7 +517,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
 
   <section class="beat right" id="beat-4" data-shape="4" style="--c:var(--b4)">
     <div class="wrap"><div class="panel reveal">
-      <span class="no">04 / 05</span>
+      <span class="no">TRK 04 · SIDE A</span>
       <h2>Inspire <em>more.</em></h2>
       <p class="copy">One artist's breakthrough becomes the next kid's reason to start. We take every story home, with takeovers in their own city and workshops with Youth Music, so the ripple keeps going.</p>
       <div class="chips"><span>Home-city takeovers</span><span>The Academy</span><span>Live nights</span></div>
@@ -385,7 +527,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
 
   <section class="beat" id="beat-5" data-shape="5" style="--c:var(--b5)">
     <div class="wrap"><div class="panel reveal">
-      <span class="no">05 / 05</span>
+      <span class="no">TRK 05 · SIDE A</span>
       <h2>Find their <em>flavour.</em></h2>
       <p class="copy">The point of all of it. A sound that's unmistakably theirs, and the confidence to keep making it. When an artist finds their flavour, everyone around them hears it.</p>
       <div class="chips"><span>Identity</span><span>Confidence</span><span>Longevity</span></div>
@@ -450,13 +592,149 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
             <li><div><strong>Sign</strong><span>Studio agreement and house rules. Filming consent is separate and always your call.</span></div></li>
             <li><div><strong>In the room</strong><span>Turn up, plug in, make the thing.</span></div></li>
           </ol>
-          <p class="note">Every session is a request until we confirm it. Under 18? You're welcome here. Sessions need a parent or guardian's consent and a supervising adult in the room.</p>
+          <p class="note"><a href="#book" class="booklink">Request a session →</a> Every session is a request until we confirm it. Under 18? You're welcome here. Sessions need a parent or guardian's consent and a supervising adult in the room.</p>
         </div>
       </div>
     </div>
   </section>
 
   <div class="after">
+    <section class="book" id="book">
+      <div class="wrap">
+        <div class="book-head">
+          <div>
+            <span class="eyebrow" style="color:var(--b1)"><i></i>Flavour FM Studios · Bookings</span>
+            <h2 style="margin-top:22px">Book the<br>room.</h2>
+          </div>
+          <p class="muted">Pick a room, pick a weekday, tell us what you're making. Every booking starts as a request, and our team confirms by email, usually within three working days. Monday to Friday, 10:00 to 18:00.</p>
+        </div>
+
+        <form class="booker" id="booker" novalidate>
+          <ol class="stepper" aria-label="Booking steps">
+            <li data-s="1" class="on"><b>01</b>Room</li>
+            <li data-s="2"><b>02</b>Day</li>
+            <li data-s="3"><b>03</b>You</li>
+            <li data-s="4"><b>04</b>Send</li>
+          </ol>
+
+          <!-- Step 1: room -->
+          <fieldset class="bstep" data-step="1">
+            <legend class="sr">Choose a room</legend>
+            <div class="rooms-pick">
+              <label class="rp" style="--c:var(--b1)">
+                <input type="radio" name="room" id="room-control" value="control" checked>
+                <span class="rp-img"><img src="img/studio-desk.webp" alt="" loading="lazy" style="object-position:50% 62%"></span>
+                <span class="rp-body"><span class="k">ROOM 01</span><b>Control room</b><span>Production, mixing and playback at the desk. Up to 4 people.</span></span>
+              </label>
+              <label class="rp" style="--c:var(--b3)">
+                <input type="radio" name="room" id="room-booth" value="booth">
+                <span class="rp-img"><img src="img/studio-desk.webp" alt="" loading="lazy" style="object-position:50% 46%;transform:scale(1.9)"></span>
+                <span class="rp-body"><span class="k">ROOM 02</span><b>Vocal booth</b><span>Vocals, voiceover and podcasts, recorded through the glass. Up to 3 people.</span></span>
+              </label>
+              <label class="rp" style="--c:var(--b5)">
+                <input type="radio" name="room" id="room-lounge" value="lounge">
+                <span class="rp-img"><img src="img/studio-lounge.webp" alt="" loading="lazy" style="object-position:50% 55%"></span>
+                <span class="rp-body"><span class="k">ROOM 03</span><b>The lounge</b><span>Writing sessions, interviews, playbacks and shoots. Up to 8 people.</span></span>
+              </label>
+            </div>
+            <div class="bnav"><span></span><button type="button" class="bbtn solid" data-next>Choose a day <span aria-hidden="true">→</span></button></div>
+          </fieldset>
+
+          <!-- Step 2: day + session -->
+          <fieldset class="bstep" data-step="2" hidden>
+            <legend class="sr">Choose a day and session</legend>
+            <div class="cal-wrap">
+              <div class="cal">
+                <div class="cal-top">
+                  <button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">←</button>
+                  <b id="calMonth">October 2026</b>
+                  <button type="button" class="cal-nav" id="calNext" aria-label="Next month">→</button>
+                </div>
+                <div class="cal-dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+                <div class="cal-grid" id="calGrid" role="grid"></div>
+                <div class="cal-key">
+                  <span><i class="open"></i>Open for requests</span>
+                  <span><i class="limited"></i>Part booked</span>
+                  <span><i class="full"></i>Full or closed</span>
+                </div>
+                <p class="cal-note" id="calNote">Open means the studio is running that day. It doesn't hold a slot until we confirm.</p>
+              </div>
+              <div class="slots">
+                <span class="k" id="slotDay">PICK A DAY</span>
+                <div class="slot-list" id="slotList">
+                  <label class="slot"><input type="radio" name="slot" value="am" disabled><span><b>Morning</b>10:00 to 14:00</span></label>
+                  <label class="slot"><input type="radio" name="slot" value="pm" disabled><span><b>Afternoon</b>14:00 to 18:00</span></label>
+                  <label class="slot"><input type="radio" name="slot" value="day" disabled><span><b>Full day</b>10:00 to 18:00</span></label>
+                </div>
+                <p class="muted small">Weekdays only. Requests need at least two working days' notice and can be made up to three months ahead.</p>
+              </div>
+            </div>
+            <div class="bnav"><button type="button" class="bbtn" data-back>← Back</button><button type="button" class="bbtn solid" data-next>Your details <span aria-hidden="true">→</span></button></div>
+          </fieldset>
+
+          <!-- Step 3: details -->
+          <fieldset class="bstep" data-step="3" hidden>
+            <legend class="sr">Your details</legend>
+            <div class="fields">
+              <label class="f"><span>Your name</span><input id="f-name" name="name" autocomplete="name" required maxlength="80"></label>
+              <label class="f"><span>Email</span><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="120"></label>
+              <label class="f"><span>Phone <em>optional</em></span><input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="30"></label>
+              <label class="f"><span>Artist or project name</span><input id="f-project" name="project" required maxlength="80"></label>
+              <label class="f"><span>What are you making?</span>
+                <select id="f-type" name="type" required>
+                  <option value="">Choose one</option>
+                  <option>Recording</option><option>Writing session</option><option>Production or mixing</option><option>Podcast or interview</option><option>Content shoot</option><option>Workshop</option>
+                </select></label>
+              <label class="f"><span>How many people?</span><input id="f-people" name="people" type="number" min="1" max="8" value="1" required></label>
+              <label class="f wide"><span>Tell us about the session <em>optional</em></span><textarea id="f-notes" name="notes" rows="3" maxlength="800" placeholder="Equipment you're bringing, references, anything we should know"></textarea></label>
+              <label class="f wide hp" aria-hidden="true"><span>Website</span><input id="f-website" name="website" tabindex="-1" autocomplete="off"></label>
+            </div>
+
+            <div class="u18">
+              <label class="toggle"><input type="checkbox" id="f-u18" name="under18"><span class="sw" aria-hidden="true"></span><span>Someone coming is under 18</span></label>
+              <div class="u18-body" id="u18Body" hidden>
+                <p>You're very welcome. We'll need a parent or guardian's consent and a supervising adult in the room for the whole session, and we can't confirm without both.</p>
+                <div class="fields">
+                  <label class="f"><span>Parent or guardian's name</span><input id="f-gname" name="guardianName" maxlength="80"></label>
+                  <label class="f"><span>Their email</span><input id="f-gemail" name="guardianEmail" type="email" maxlength="120"></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="consents">
+              <label class="check"><input type="checkbox" id="c-rules" name="rules" required><span>I've read the studio rules and code of conduct</span></label>
+              <label class="check"><input type="checkbox" id="c-privacy" name="privacy" required><span>I've read the privacy notice and I'm happy for Flavour FM to use my details to manage this request</span></label>
+              <label class="check opt"><input type="checkbox" id="c-film" name="filming"><span>Optional: I'm open to the session being filmed or photographed. This is separate, never required, and you can change your mind at any time.</span></label>
+            </div>
+            <p class="ferr" id="ferr" role="alert" hidden></p>
+            <div class="bnav"><button type="button" class="bbtn" data-back>← Back</button><button type="button" class="bbtn solid" data-next>Review <span aria-hidden="true">→</span></button></div>
+          </fieldset>
+
+          <!-- Step 4: review + send -->
+          <fieldset class="bstep" data-step="4" hidden>
+            <legend class="sr">Review and send</legend>
+            <div class="review" id="review"></div>
+            <div class="bnav"><button type="button" class="bbtn" data-back>← Back</button><button type="submit" class="bbtn solid" id="sendBtn">Send request <span aria-hidden="true">→</span></button></div>
+          </fieldset>
+
+          <!-- Done -->
+          <div class="bdone" id="bdone" hidden>
+            <span class="k" style="color:var(--b1)">REQUEST RECEIVED</span>
+            <h3 id="doneTitle">You're in the queue.</h3>
+            <p id="doneBody">This is a request, not a confirmed booking yet. We'll come back to you by email, usually within three working days.</p>
+            <div class="ref"><span>Your reference</span><code id="doneRef">FFM-000000</code></div>
+            <div class="fallback" id="fallback" hidden>
+              <p>Online requests aren't switched on yet, so send this to the team and we'll take it from there:</p>
+              <div class="addr"><code id="mail3">flavourfm@lemon-pepper.co.uk</code><button type="button" class="copybtn" data-copy="mail3">Copy</button></div>
+              <pre id="fallbackText"></pre>
+              <button type="button" class="bbtn" id="copyReq">Copy request</button>
+            </div>
+            <button type="button" class="bbtn" id="newReq" style="margin-top:20px">Make another request</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
     <section class="season" id="season">
       <div class="wrap">
         <span class="eyebrow" style="color:var(--b3)"><i></i>Season one</span>
@@ -506,7 +784,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
         <h2 style="margin-top:22px">Make some <span class="spec-text">noise.</span></h2>
         <div class="doors">
           <article class="door" style="--c:var(--b1)"><span class="k">ARTISTS</span><h3>Send us your track</h3><p>We listen to everything. Strong tracks make our restaurant playlists, and some of those artists end up in the studio.</p><div class="addr"><code id="mail1">flavourfm@lemon-pepper.co.uk</code><button class="copybtn" data-copy="mail1">Copy</button></div></article>
-          <article class="door" style="--c:var(--b3)"><span class="k">STUDIO</span><h3>Request a session</h3><p>Email us with your name, what you're making, who's coming and the dates that work. Put "Studio request" in the subject.</p><div class="addr"><code id="mail2">flavourfm@lemon-pepper.co.uk</code><button class="copybtn" data-copy="mail2">Copy</button></div></article>
+          <article class="door" style="--c:var(--b3)"><span class="k">STUDIO</span><h3>Request a session</h3><p>Pick a room and a weekday, tell us what you're making, and we'll come back to you by email.</p><a class="bbtn solid" href="#book" style="margin-top:auto;text-align:center;text-decoration:none">Book the studio</a></article>
           <article class="door" style="--c:var(--b5)"><span class="k">EVERYONE</span><h3>Follow the frequency</h3><p>New drops, session clips and the next takeover near you.</p>
             <div class="handles">
               <a href="https://www.instagram.com/flavourfm" target="_blank" rel="noopener">Instagram <span>@flavourfm</span></a>
@@ -530,6 +808,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
     </div>
   </div>
 </footer>
+<button class="play dock" data-play data-off="Play" data-on="Pause" type="button" aria-pressed="false" aria-label="Play or pause the Flavour FM session"><span class="eqi" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pl">Play</span><span class="bpm">92 BPM</span></button>
 <div class="toast" id="toast" role="status">Copied</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous"></script>
@@ -582,133 +861,262 @@ document.documentElement.classList.add('js');
   var rail = document.getElementById('rail'), railLinks = [].slice.call(rail.querySelectorAll('a'));
   var beats = [1,2,3,4,5].map(function(n){ return document.getElementById('beat-' + n); });
 
+  /* ---------- Beat clock + live session synth ---------- */
+  var BPM = 92, SPB = 60 / BPM, STEP = SPB / 4;
+  var audio = null, playing = false, kickTimes = [], barCount = 0;
+  var playBtns = [].slice.call(document.querySelectorAll('[data-play]'));
+  function setPlayUI(){ playBtns.forEach(function(b){ b.classList.toggle('on', playing); var l = b.querySelector('.pl'); if (l) l.textContent = playing ? (b.dataset.on || 'Pause the session') : (b.dataset.off || 'Play the session'); b.setAttribute('aria-pressed', playing); }); document.documentElement.classList.toggle('playing', playing); }
+  function makeAudio(){
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
+    var ctx = new AC(), master = ctx.createGain(), comp = ctx.createDynamicsCompressor(), an = ctx.createAnalyser();
+    master.gain.value = .55; comp.threshold.value = -14; comp.ratio.value = 4;
+    master.connect(comp); comp.connect(an); an.connect(ctx.destination); an.fftSize = 256;
+    var nb = ctx.createBuffer(1, ctx.sampleRate * .5, ctx.sampleRate), d = nb.getChannelData(0); for (var i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+    var A = { ctx: ctx, out: master, an: an, noise: nb, data: new Uint8Array(an.frequencyBinCount), step: 0, next: 0 };
+    A.kick = function(t){ var o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(155, t); o.frequency.exponentialRampToValueAtTime(42, t + .14); g.gain.setValueAtTime(1, t); g.gain.exponentialRampToValueAtTime(.001, t + .42); o.connect(g); g.connect(master); o.start(t); o.stop(t + .45); kickTimes.push(t); if (kickTimes.length > 16) kickTimes.shift(); };
+    A.snare = function(t, v){ var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain(); s.buffer = nb; f.type = 'bandpass'; f.frequency.value = 1900; f.Q.value = .8; g.gain.setValueAtTime(.55*v, t); g.gain.exponentialRampToValueAtTime(.001, t + .2); s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + .22);
+      var o = ctx.createOscillator(), og = ctx.createGain(); o.frequency.value = 185; og.gain.setValueAtTime(.3*v, t); og.gain.exponentialRampToValueAtTime(.001, t + .1); o.connect(og); og.connect(master); o.start(t); o.stop(t + .12); };
+    A.hat = function(t, open){ var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain(); s.buffer = nb; f.type = 'highpass'; f.frequency.value = 7200; var len = open ? .28 : .045; g.gain.setValueAtTime(open ? .12 : .16, t); g.gain.exponentialRampToValueAtTime(.001, t + len); s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + len + .02); };
+    A.bass = function(t, hz, len){ var o = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain(); o.type = 'sawtooth'; o.frequency.value = hz; f.type = 'lowpass'; f.frequency.setValueAtTime(520, t); f.frequency.exponentialRampToValueAtTime(140, t + len); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.32, t + .01); g.gain.exponentialRampToValueAtTime(.001, t + len); o.connect(f); f.connect(g); g.connect(master); o.start(t); o.stop(t + len + .02); };
+    A.chord = function(t, notes){ notes.forEach(function(hz){ var o = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain(); o.type = 'triangle'; o.frequency.value = hz; o.detune.value = (Math.random()-.5)*14; f.type = 'lowpass'; f.frequency.value = 1400; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.045, t + .04); g.gain.exponentialRampToValueAtTime(.001, t + SPB*3.6); o.connect(f); f.connect(g); g.connect(master); o.start(t); o.stop(t + SPB*3.7); }); };
+    A.pluck = function(t, hz){ var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = hz; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.07, t + .005); g.gain.exponentialRampToValueAtTime(.001, t + .3); o.connect(g); g.connect(master); o.start(t); o.stop(t + .32); };
+    // A minor: Am, F, C, G
+    var bassRoot = [55, 43.65, 65.41, 49], chords = [[220,261.63,329.63],[174.61,220,261.63],[261.63,329.63,392],[196,246.94,293.66]];
+    var arp = [[440,523.25,659.25,880],[349.23,440,523.25,698.46],[523.25,659.25,783.99,1046.5],[392,493.88,587.33,783.99]];
+    A.tick = function(){
+      while (A.next < ctx.currentTime + .14){
+        var s = A.step % 16, bar = Math.floor(A.step / 16), ch = bar % 4, t = A.next + (s % 2 ? STEP*.14 : 0);
+        if (s === 0 || s === 6 || s === 10) A.kick(t);
+        if (s === 4 || s === 12) A.snare(t, 1); if (s === 15) A.snare(t, .25);
+        if (s % 2 === 0) A.hat(t, s === 14); else if (s === 7 || s === 11) A.hat(t, false);
+        if (s === 0) A.bass(t, bassRoot[ch], SPB*1.4); if (s === 6) A.bass(t, bassRoot[ch]*1.5, SPB*.5); if (s === 10) A.bass(t, bassRoot[ch], SPB*.9); if (s === 14) A.bass(t, bassRoot[ch]*2, SPB*.35);
+        if (s === 0) A.chord(t, chords[ch]);
+        if (bar % 2 === 1 && s % 2 === 0) A.pluck(t, arp[ch][(s/2) % 4]);
+        if (s === 0) barCount = bar;
+        A.step++; A.next += STEP;
+      }
+    };
+    return A;
+  }
+  function togglePlay(){
+    if (!audio){ audio = makeAudio(); if (!audio) return; audio.next = audio.ctx.currentTime + .08; audio.timer = setInterval(function(){ if (playing) audio.tick(); }, 25); }
+    playing = !playing;
+    if (playing){ audio.ctx.resume(); if (audio.next < audio.ctx.currentTime) audio.next = audio.ctx.currentTime + .05; audio.tick(); }
+    else audio.ctx.suspend();
+    setPlayUI();
+  }
+  playBtns.forEach(function(b){ b.addEventListener('click', togglePlay); });
+  setPlayUI();
+
+  function beatState(clockT){
+    // returns kick envelope 0..1, a level 0..1 and bar/beat for the counter
+    if (playing && audio){
+      var now = audio.ctx.currentTime, last = -9;
+      for (var i = kickTimes.length - 1; i >= 0; i--){ if (kickTimes[i] <= now){ last = kickTimes[i]; break; } }
+      audio.an.getByteFrequencyData(audio.data); var sum = 0; for (var j=0;j<24;j++) sum += audio.data[j]; var lvl = sum / (24*255);
+      var stepNow = Math.max(0, audio.step - Math.round((audio.next - now)/STEP));
+      return { kick: Math.exp(-(now - last) * 7), level: lvl, bar: Math.floor(stepNow/16) + 1, beat: Math.floor((stepNow % 16)/4) + 1 };
+    }
+    var ph = (clockT % SPB) / SPB;
+    return { kick: reduce ? 0 : Math.exp(-ph * SPB * 9) * .6, level: .18, bar: null, beat: null };
+  }
+
+  /* ---------- Timeline + mixer rail ---------- */
+  var tlHead = document.getElementById('tlHead'), tlCount = document.getElementById('tlCount');
+  var meters = railLinks.map(function(a){ return a.querySelector('i'); });
+  var scrollBar = 1;
+  function scrollTimeline(){
+    var max = document.documentElement.scrollHeight - innerHeight, p = max > 0 ? scrollY / max : 0;
+    if (tlHead) tlHead.style.transform = 'translateX(' + (p * 100) + '%)';
+    scrollBar = 1 + p * 63;
+  }
+  addEventListener('scroll', scrollTimeline, { passive: true }); scrollTimeline();
+  function pad(n){ return (n < 10 ? '00' : n < 100 ? '0' : '') + n; }
+
   /* ---------- 3D stage ---------- */
   var canvas = document.getElementById('stage');
   var shapeSecs = [].slice.call(document.querySelectorAll('[data-shape]'));
   var gl = null;
   try { gl = window.THREE && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')); } catch(e){}
-  if (!gl){ onScroll(); addEventListener('scroll', onScroll, { passive: true }); return; }
+  if (!gl){
+    onScroll(); addEventListener('scroll', onScroll, { passive: true });
+    (function ui(){ var b = beatState(performance.now()/1000); uiFrame(b); requestAnimationFrame(ui); })();
+    return;
+  }
 
-  var N = mobile ? 4200 : 9000;
+  var N = mobile ? 4600 : 10000;
   var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, alpha: true, context: gl });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 1.75));
   renderer.setSize(innerWidth, innerHeight, false);
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, .1, 100);
-  camera.position.set(0, 0, mobile ? 9 : 7.2);
+  var camera = new THREE.PerspectiveCamera(52, innerWidth/innerHeight, .1, 100);
+  camera.position.set(0, 0, mobile ? 9.6 : 7.6);
 
-  var C = { lime:[.847,.965,.333], lemon:[1,.812,0], mango:[1,.459,0], atomic:[1,.231,.306], hawaii:[0,.71,.725], berry:[.565,.184,.38], egg:[.94,.913,.863], green:[.06,.36,.2] };
+  var C = { lime:[.847,.965,.333], lemon:[1,.812,0], mango:[1,.459,0], atomic:[1,.231,.306], hawaii:[0,.71,.725], berry:[.565,.184,.38], egg:[.94,.913,.863], green:[.05,.32,.18], dim:[.12,.2,.15] };
   function mixc(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+  function mulc(a,k){ return [a[0]*k, a[1]*k, a[2]*k]; }
   var spec = [C.lime, C.lemon, C.mango, C.atomic, C.berry, C.hawaii];
-  function spectrum(t){ t = ((t%1)+1)%1; var s = t*(spec.length-1), i = Math.floor(s); return mixc(spec[i], spec[Math.min(i+1,spec.length-1)], s-i); }
+  function spectrum(t){ t = Math.max(0, Math.min(.9999, t)); var s = t*(spec.length-1), i = Math.floor(s); return mixc(spec[i], spec[i+1], s-i); }
   function rnd(a,b){ return a + Math.random()*(b-a); }
-  function gauss(){ return (Math.random()+Math.random()+Math.random()-1.5)/1.5; }
+  function g(){ return (Math.random()+Math.random()+Math.random()-1.5)/1.5; }
+  var TAU = Math.PI*2;
 
-  // Each shape: positions (xyz), colours (rgb), sizes
-  function makeShape(fn){ var p = new Float32Array(N*3), c = new Float32Array(N*3), s = new Float32Array(N); for (var i=0;i<N;i++){ var o = fn(i, i/N); p[i*3]=o[0];p[i*3+1]=o[1];p[i*3+2]=o[2]; c[i*3]=o[3][0];c[i*3+1]=o[3][1];c[i*3+2]=o[3][2]; s[i]=o[4]; } return { p:p, c:c, s:s }; }
-
+  // Each point: [x,y,z, colour, size, kick, param]
+  // kick > 0 pushes outward on the beat, kick < 0 pushes forward (speaker cones)
+  // param: cable/ripple phase (0..10), fader caps use 20+
+  function makeShape(fn){
+    var o = { p: new Float32Array(N*3), c: new Float32Array(N*3), s: new Float32Array(N), k: new Float32Array(N), a: new Float32Array(N) };
+    for (var i=0;i<N;i++){ var v = fn(i, i/N); o.p[i*3]=v[0];o.p[i*3+1]=v[1];o.p[i*3+2]=v[2]; o.c[i*3]=v[3][0];o.c[i*3+1]=v[3][1];o.c[i*3+2]=v[3][2]; o.s[i]=v[4]; o.k[i]=v[5]||0; o.a[i]=v[6]||0; }
+    return o;
+  }
   var shapes = [];
-  // 0 · The frequency globe: a sphere rippled like a sound wave, painted in the full spectrum
+
+  // 0 · Vinyl: grooves with a light streak, a spectrum label, and the rim
   shapes.push(makeShape(function(i,t){
-    var y = 1 - 2*t, r = Math.sqrt(1-y*y), th = i * 2.399963;
-    var x = Math.cos(th)*r, z = Math.sin(th)*r;
-    var w = 2.2 + .22*Math.sin(y*9) * Math.cos(th*3);
-    return [x*w, y*w, z*w, spectrum((y+1)/2*.92), rnd(.6,1.3)];
+    var a = rnd(0,TAU);
+    if (t < .76){ var r = 1.05 + 1.55*Math.sqrt(Math.random()); r = Math.round(r*44)/44 + g()*.004;
+      var sheen = .14 + .86*Math.pow(Math.abs(Math.cos(a - .7)), 14);
+      return [Math.cos(a)*r, g()*.01, Math.sin(a)*r, mixc(C.dim, C.egg, sheen), rnd(.45,.9)*(0.8+sheen*.6), .05, r]; }
+    if (t < .93){ var rl = .95*Math.sqrt(Math.random()); if (rl < .07) rl = .07;
+      return [Math.cos(a)*rl, .01, Math.sin(a)*rl, spectrum(a/TAU), rnd(.7,1.3), .25, 0]; }
+    return [Math.cos(a)*2.62, 0, Math.sin(a)*2.62, C.egg, rnd(.6,1.1), .1, 0];
   }));
-  // 1 · Find talent: a wide, dim crowd of points with one bright spark at the centre
+
+  // 1 · Find talent: one mic, one spotlight, the crowd waiting in the dark
   shapes.push(makeShape(function(i,t){
-    if (i < N*.05){ var g = .25*Math.pow(Math.random(),2); var a = rnd(0,6.283), b = rnd(-1,1), q = Math.sqrt(1-b*b); return [Math.cos(a)*q*g, b*g, Math.sin(a)*q*g, C.lime, rnd(1.6,3.2)]; }
-    var R = rnd(2.2, 9), a2 = rnd(0,6.283);
-    return [Math.cos(a2)*R, gauss()*2.4, Math.sin(a2)*R - 2, mixc(C.green, C.egg, Math.random()*.35), rnd(.35,.9)];
+    var a = rnd(0,TAU);
+    if (t < .17){ var u = rnd(-1,1), q = Math.sqrt(1-u*u), grille = (Math.round((u+1)*9) % 2) ? 1 : .55;
+      return [Math.cos(a)*q*.42, 1.05 + u*.56, Math.sin(a)*q*.42, mulc(mixc(C.egg, C.lime, .35), grille), rnd(.7,1.3), .55, 0]; }
+    if (t < .26){ var y = rnd(-.45,.5); return [Math.cos(a)*.2, y, Math.sin(a)*.2, mulc(C.egg,.55), rnd(.5,.9), .2, 0]; }
+    if (t < .33){ if (Math.random() < .55) return [g()*.02, rnd(-2.2,-.45), g()*.02, mulc(C.egg,.6), rnd(.45,.7), 0, 0];
+      var rb = .7*Math.sqrt(Math.random()); return [Math.cos(a)*rb, -2.2, Math.sin(a)*rb, mulc(C.egg,.5), rnd(.45,.75), 0, 0]; }
+    if (t < .58){ var h = Math.random(), rr = 1.9*h*Math.sqrt(Math.random()); // spotlight cone, apex above
+      return [Math.cos(a)*rr, 3.8 - h*6, Math.sin(a)*rr, mulc(C.lime, .22 + .2*(1-h)), rnd(.35,.7), 0, 0]; }
+    if (t < .68){ var rp = 1.9*Math.sqrt(Math.random()); return [Math.cos(a)*rp, -2.2, Math.sin(a)*rp, mulc(C.lime, .75 - rp*.25), rnd(.5,1), .05, 0]; }
+    var R = rnd(3.2, 9.5); return [Math.cos(a)*R, -2.15 + Math.abs(g())*.5, Math.sin(a)*R - 1, mixc(C.dim, C.egg, Math.random()*.25), rnd(.35,.8), 0, 0];
   }));
-  // 2 · Create & connect: five studios (clusters) joined by threads of light
-  var hubs = []; for (var h=0; h<5; h++){ var ang = h/5*6.283 + .3; hubs.push([Math.cos(ang)*2.6, Math.sin(ang)*1.6, Math.sin(ang*2)*1.2]); }
+
+  // 2 · Create and connect: five jacks, patch cables sagging between them, signal running through
+  var jacks = []; for (var h=0; h<5; h++){ var ja = h/5*TAU + Math.PI/2; jacks.push([Math.cos(ja)*2.5, Math.sin(ja)*1.55 + .3, Math.sin(ja*2)*.9]); }
+  var cables = [[0,2],[0,3],[1,3],[1,4],[2,4],[0,1],[3,4],[1,2]];
   shapes.push(makeShape(function(i,t){
-    if (i < N*.55){ var hb = hubs[i%5], r = .55*Math.cbrt(Math.random()), a = rnd(0,6.283), b = rnd(-1,1), q = Math.sqrt(1-b*b);
-      return [hb[0]+Math.cos(a)*q*r, hb[1]+b*r, hb[2]+Math.sin(a)*q*r, mixc(C.lemon, C.egg, Math.random()*.3), rnd(.7,1.5)]; }
-    var A = hubs[i%5], B = hubs[(i*7+2)%5]; if (A===B) B = hubs[(i+1)%5]; var u = Math.random();
-    return [A[0]+(B[0]-A[0])*u + gauss()*.03, A[1]+(B[1]-A[1])*u + gauss()*.03, A[2]+(B[2]-A[2])*u + gauss()*.03, mixc(C.lemon, C.mango, u*.5), rnd(.35,.7)];
+    var a = rnd(0,TAU);
+    if (t < .26){ var j = jacks[i%5], ring = Math.random() < .7, r = ring ? .34 + g()*.02 : .13*Math.sqrt(Math.random());
+      return [j[0] + Math.cos(a)*r, j[1] + Math.sin(a)*r, j[2] + g()*.03, ring ? C.egg : C.lemon, ring ? rnd(.6,1.1) : rnd(.9,1.6), .4, 0]; }
+    var ci = i % cables.length, A = jacks[cables[ci][0]], B = jacks[cables[ci][1]], u = Math.random();
+    var mx = (A[0]+B[0])/2, my = (A[1]+B[1])/2 - 1.5, mz = (A[2]+B[2])/2 + .6;
+    var x = (1-u)*(1-u)*A[0] + 2*(1-u)*u*mx + u*u*B[0], y = (1-u)*(1-u)*A[1] + 2*(1-u)*u*my + u*u*B[1], z = (1-u)*(1-u)*A[2] + 2*(1-u)*u*mz + u*u*B[2];
+    return [x + g()*.035, y + g()*.035, z + g()*.035, mixc(C.lemon, C.mango, ci/cables.length*.8), rnd(.45,.85), 0, u + ci*.37];
   }));
-  // 3 · Original music: a circular EQ, 72 bars radiating out like a record being cut
-  var bars = 72, bh = []; for (var k=0;k<bars;k++) bh.push(.4 + Math.pow(Math.abs(Math.sin(k*.37)*Math.cos(k*.13)),.7)*2.1);
+
+  // 3 · Original music: a pair of studio monitors, woofers pumping on the kick
+  function cab(e, cx){ var W=.62, H=1.0, D=.45, u = rnd(-1,1); var pts = [
+    [u*W,-H,-D],[u*W,H,-D],[u*W,-H,D],[u*W,H,D],[-W,u*H,-D],[W,u*H,-D],[-W,u*H,D],[W,u*H,D],[-W,-H,u*D],[W,-H,u*D],[-W,H,u*D],[W,H,u*D]][e]; return [pts[0]+cx, pts[1], pts[2]]; }
   shapes.push(makeShape(function(i,t){
-    var k = i % bars, a = k/bars*6.283, u = Math.random(), r0 = 1.25, r = r0 + u*bh[k];
-    return [Math.cos(a)*r + gauss()*.02, Math.sin(a)*r + gauss()*.02, gauss()*.08, mixc(C.mango, C.lemon, u*.6), rnd(.6,1.3)];
+    var side = (i % 2) ? 1 : -1, cx = side*1.45, a = rnd(0,TAU);
+    if (t < .24){ var p = cab(Math.floor(Math.random()*12), cx); return [p[0], p[1], p[2], mulc(C.egg,.7), rnd(.5,.9), 0, 0]; }
+    if (t < .62){ var r = .5*Math.sqrt(Math.random()); var rim = r > .44;
+      return [cx + Math.cos(a)*r, -.3 + Math.sin(a)*r, .46 - (.5 - r)*.32, rim ? C.egg : mixc(C.mango, C.lemon, r*1.4), rnd(.55,1.1), r < .44 ? -1 : -.25, 0]; }
+    if (t < .74){ var rt = .17*Math.sqrt(Math.random()); return [cx + Math.cos(a)*rt, .55 + Math.sin(a)*rt, .46, C.lemon, rnd(.6,1.1), -.45, 0]; }
+    // sound pressure drifting out of the cones
+    var d = rnd(.6, 3.4), sp = .15 + d*.32; return [cx + Math.cos(a)*sp*.8, -.2 + Math.sin(a)*sp*.6, .5 + d, mulc(C.mango, .5 - d*.1), rnd(.3,.6), 0, 0];
   }));
-  // 4 · Inspire more: ripples spreading outward across a tilted plane
+
+  // 4 · Inspire more: sound waves rolling out from a single source
   shapes.push(makeShape(function(i,t){
-    var ring = Math.floor(Math.random()*7), r = .4 + ring*.75 + gauss()*.05, a = rnd(0,6.283);
-    var x = Math.cos(a)*r, z = Math.sin(a)*r;
-    return [x, z*.42 - .2 + Math.sin(r*2.2)*.12, z*.9, mixc(C.atomic, C.berry, ring/7), rnd(.5,1.2) * (1 - ring*.06)];
+    var a = rnd(0,TAU);
+    if (t < .07){ var u = rnd(-1,1), q = Math.sqrt(1-u*u); return [Math.cos(a)*q*.22, .3 + u*.3, Math.sin(a)*q*.22, C.egg, rnd(.8,1.5), .8, 0]; }
+    var ring = Math.floor(Math.random()*8), ph = ring/8 + g()*.012, r = .45 + ring*.62;
+    return [Math.cos(a)*r, g()*.04, Math.sin(a)*r, mixc(C.atomic, C.berry, ring/8), rnd(.5,1.15), .1, 2 + ph];
   }));
-  // 5 · Find their flavour: a twisting torus knot wearing the whole spectrum
+
+  // 5 · Find their flavour: headphones wearing the whole spectrum
   shapes.push(makeShape(function(i,t){
-    var P = 2, Q = 3, u = t*6.283*1, rr = Math.cos(Q*u) + 2.2;
-    var cx = rr*Math.cos(P*u), cy = rr*Math.sin(P*u), cz = -Math.sin(Q*u);
-    var tube = .32*Math.sqrt(Math.random()), a = rnd(0,6.283);
-    var sc = .78;
-    return [ (cx + Math.cos(a)*tube)*sc, (cy + Math.sin(a)*tube)*sc, (cz*1.2 + Math.sin(a+1)*tube)*sc, spectrum(t), rnd(.6,1.35)];
+    var a = rnd(0,TAU);
+    if (t < .3){ var ang = rnd(.18, Math.PI - .18), tube = .1*Math.sqrt(Math.random()), x = Math.cos(ang)*1.95, y = Math.sin(ang)*1.95 - .2;
+      return [x + Math.cos(a)*tube*.4, y + Math.sin(a)*tube, g()*.12, spectrum((x + 2)/4), rnd(.55,1), 0, 0]; }
+    var side = (i % 2) ? 1 : -1, cx = side*1.95, cy = -.55;
+    if (t < .78){ var ring = Math.random(), r = .78*Math.sqrt(ring), depth = rnd(-.28,.28);
+      var shell = Math.random() < .55; if (shell){ r = .78; }
+      return [cx + depth*side, cy + Math.sin(a)*r, Math.cos(a)*r, spectrum((cx + Math.sin(a)*.3 + 2)/4), rnd(.55,1.1), .5, 0]; }
+    var rc = .62 + g()*.04; return [cx - side*.32, cy + Math.sin(a)*rc, Math.cos(a)*rc, C.egg, rnd(.6,1.1), .35, 0];
   }));
-  // 6 · The studio: a room drawn in light, with a floor grid and a mic in the middle
+
+  // 6 · The studio: the room in light, the hanging mic and a desk of moving faders
   shapes.push(makeShape(function(i,t){
-    var W=3.2, H=1.9, D=2.6, f = Math.random();
-    if (f < .55){ // edges of the room
-      var e = Math.floor(Math.random()*12), u = rnd(-1,1), pts = [
+    var W=3.3, H=1.95, D=2.6, f = Math.random();
+    if (f < .36){ var e = Math.floor(Math.random()*12), u = rnd(-1,1), pts = [
         [u*W,-H,-D],[u*W,H,-D],[u*W,-H,D],[u*W,H,D],[-W,u*H,-D],[W,u*H,-D],[-W,u*H,D],[W,u*H,D],[-W,-H,u*D],[W,-H,u*D],[-W,H,u*D],[W,H,u*D]][e];
-      return [pts[0], pts[1], pts[2], mixc(C.lime, C.egg, .25), rnd(.5,1)];
-    }
-    if (f < .85){ // floor grid
-      var gx = Math.round(rnd(-6,6))/6*W, gz = rnd(-D,D); if (Math.random()<.5){ var tmp = gx; gx = rnd(-W,W); gz = Math.round(rnd(-5,5))/5*D; }
-      return [gx, -H, gz, C.green.map(function(v){ return v*2.2; }), rnd(.4,.8)];
-    }
-    // hanging mic: cable + capsule
-    if (f < .93) return [gauss()*.01, rnd(-.1, H), gauss()*.01, C.egg, rnd(.4,.7)];
-    var a = rnd(0,6.283), b = rnd(-1,1), q = Math.sqrt(1-b*b);
-    return [Math.cos(a)*q*.18, -.35 + b*.32, Math.sin(a)*q*.18, C.lime, rnd(.8,1.6)];
+      return [pts[0], pts[1], pts[2], mixc(C.lime, C.egg, .3), rnd(.5,1), 0, 0]; }
+    if (f < .58){ var gx = Math.round(rnd(-7,7))/7*W, gz = rnd(-D,D); if (Math.random()<.5){ gx = rnd(-W,W); gz = Math.round(rnd(-5,5))/5*D; }
+      return [gx, -H, gz, mulc(C.green, 2), rnd(.4,.8), 0, 0]; }
+    if (f < .7){ // desk slab
+      return [rnd(-2.2,2.2), -.95 + g()*.02, rnd(.2,1.1), mulc(C.egg,.35), rnd(.4,.7), 0, 0]; }
+    if (f < .86){ var ch = Math.floor(rnd(0,24)), x = -2.0 + ch*(4/23); // fader slots
+      return [x, -.93 + rnd(0,.02), rnd(.35,1.0), mulc(C.lime,.35), rnd(.35,.6), 0, 0]; }
+    if (f < .93){ var ch2 = Math.floor(rnd(0,24)), x2 = -2.0 + ch2*(4/23); // fader caps
+      return [x2 + g()*.02, -.86, .68 + g()*.04, C.lime, rnd(.9,1.5), 0, 20 + ch2/24]; }
+    if (f < .97) return [g()*.01, rnd(.1, H), g()*.01, C.egg, rnd(.4,.7), 0, 0];
+    var a = rnd(0,TAU), b = rnd(-1,1), q = Math.sqrt(1-b*b); return [Math.cos(a)*q*.17, -.1 + b*.3, Math.sin(a)*q*.17, C.lime, rnd(.8,1.6), .6, 0];
   }));
 
   var geo = new THREE.BufferGeometry();
-  var pos = new Float32Array(N*3), col = new Float32Array(N*3), siz = new Float32Array(N), seed = new Float32Array(N);
-  for (var i=0;i<N;i++) seed[i] = Math.random();
-  pos.set(shapes[0].p); col.set(shapes[0].c); siz.set(shapes[0].s);
+  var pos = new Float32Array(N*3), col = new Float32Array(N*3), siz = new Float32Array(N), kik = new Float32Array(N), par = new Float32Array(N), seed = new Float32Array(N);
+  for (var si=0; si<N; si++) seed[si] = Math.random();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
   geo.setAttribute('aSize', new THREE.BufferAttribute(siz, 1));
+  geo.setAttribute('aKick', new THREE.BufferAttribute(kik, 1));
+  geo.setAttribute('aParam', new THREE.BufferAttribute(par, 1));
   geo.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1));
 
   var mat = new THREE.ShaderMaterial({
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uPix: { value: renderer.getPixelRatio() }, uPulse: { value: 0 }, uShape: { value: 0 } },
+    uniforms: { uTime: { value: 0 }, uPix: { value: renderer.getPixelRatio() }, uPulse: { value: 0 }, uK: { value: 0 }, uKick: { value: 0 }, uLevel: { value: 0 } },
     vertexShader: [
-      'attribute vec3 aColor; attribute float aSize; attribute float aSeed;',
-      'uniform float uTime; uniform float uPix; uniform float uPulse; uniform float uShape;',
-      'varying vec3 vColor; varying float vAlpha;',
+      'attribute vec3 aColor; attribute float aSize; attribute float aKick; attribute float aParam; attribute float aSeed;',
+      'uniform float uTime; uniform float uPix; uniform float uPulse; uniform float uK; uniform float uKick; uniform float uLevel;',
+      'varying vec3 vColor; varying float vAlpha; varying float vBoost;',
+      'float w(float k){ return 1.0 - clamp(abs(uK - k), 0.0, 1.0); }',
       'void main(){',
-      '  vec3 p = position;',
-      '  float l = length(p);',
-      '  float wob = sin(uTime*1.6 + aSeed*6.2831 + l*2.4);',
-      '  p += normalize(p + 0.0001) * wob * (0.035 + uPulse*0.12);',
-      '  p.y += sin(uTime*0.6 + aSeed*12.0) * 0.03;',
+      '  vec3 p = position; float fade = 1.0; float boost = 1.0; float sz = aSize;',
+      '  float w2 = w(2.0), w4 = w(4.0), w6 = w(6.0);',
+      '  if (w4 > 0.001 && aParam >= 2.0 && aParam < 4.0){',
+      '    vec2 d = normalize(p.xz + vec2(0.0001));',
+      '    float r = 0.3 + fract(aParam + uTime * 0.13) * 5.0;',
+      '    p.xz = mix(p.xz, d * r, w4); p.y += sin(r * 2.2 - uTime * 2.0) * 0.08 * w4;',
+      '    fade = mix(1.0, smoothstep(5.3, 3.2, r) * smoothstep(0.25, 0.7, r), w4);',
+      '  }',
+      '  if (w2 > 0.001 && aParam > 0.0 && aParam < 2.0){',
+      '    float dd = fract(aParam * 1.0 - uTime * 0.55) - 0.5; float sig = exp(-dd * dd * 260.0) * w2;',
+      '    boost += sig * 2.6; sz *= 1.0 + sig * 1.5;',
+      '  }',
+      '  if (aParam >= 20.0){ p.y += (0.5 + 0.5 * sin(uTime * 2.4 + aParam * 31.0)) * (0.1 + uLevel * 0.25) * w6; }',
+      '  float kw = abs(aKick);',
+      '  vec3 dir = aKick < 0.0 ? vec3(0.0, 0.0, 1.0) : normalize(p + vec3(0.0001));',
+      '  p += dir * kw * uKick * 0.24;',
+      '  boost += kw * uKick * 1.1;',
+      '  p += normalize(p + vec3(0.0001)) * sin(uTime * 1.6 + aSeed * 6.2831 + length(p) * 2.4) * (0.018 + uPulse * 0.12);',
       '  vec4 mv = modelViewMatrix * vec4(p, 1.0);',
       '  gl_Position = projectionMatrix * mv;',
-      '  float tw = 0.75 + 0.25*sin(uTime*3.0 + aSeed*40.0);',
-      '  gl_PointSize = aSize * uPix * (28.0 / -mv.z) * tw;',
-      '  vColor = aColor; vAlpha = clamp(1.4 - (-mv.z)/16.0, 0.15, 1.0);',
+      '  float tw = 0.78 + 0.22 * sin(uTime * 3.0 + aSeed * 40.0);',
+      '  gl_PointSize = sz * uPix * (28.0 / -mv.z) * tw;',
+      '  vColor = aColor; vBoost = boost; vAlpha = clamp(1.45 - (-mv.z) / 16.0, 0.15, 1.0) * fade;',
       '}'
     ].join('\n'),
     fragmentShader: [
-      'varying vec3 vColor; varying float vAlpha;',
+      'varying vec3 vColor; varying float vAlpha; varying float vBoost;',
       'void main(){',
       '  vec2 c = gl_PointCoord - 0.5; float d = length(c);',
-      '  float a = smoothstep(0.5, 0.0, d); a = pow(a, 1.6);',
-      '  gl_FragColor = vec4(vColor * (0.85 + a*0.6), a * vAlpha);',
+      '  float a = smoothstep(0.5, 0.0, d); a = a * a;',
+      '  gl_FragColor = vec4(vColor * (0.8 + a * 0.7) * vBoost, a * vAlpha);',
       '}'
     ].join('\n')
   });
   var points = new THREE.Points(geo, mat);
   var group = new THREE.Group(); group.add(points); scene.add(group);
 
-  // Scroll to shape mapping: interpolate between section centres
+  // scroll -> shape index
   var target = 0, current = 0;
   function centres(){ return shapeSecs.map(function(s){ var r = s.getBoundingClientRect(); return { y: r.top + r.height/2, k: +s.dataset.shape }; }); }
   function onScroll(){
@@ -720,46 +1128,230 @@ document.documentElement.classList.add('js');
       else if (mid >= cs[cs.length-1].y) target = cs[cs.length-1].k;
       else for (var i=0;i<cs.length-1;i++){ if (mid >= cs[i].y && mid < cs[i+1].y){ var f = (mid - cs[i].y)/(cs[i+1].y - cs[i].y); f = f*f*(3-2*f); target = cs[i].k + (cs[i+1].k - cs[i].k)*f; break; } }
     }
-    // rail
     var b1 = beats[0].getBoundingClientRect(), b5 = beats[4].getBoundingClientRect();
     rail.classList.toggle('on', b1.top < innerHeight*.6 && b5.bottom > innerHeight*.4);
     var act = -1; beats.forEach(function(b, i){ var r = b.getBoundingClientRect(); if (r.top < mid && r.bottom > mid) act = i; });
     railLinks.forEach(function(a, i){ a.classList.toggle('active', i === act); });
+    activeBeat = act;
   }
+  var activeBeat = -1;
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', function(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); onScroll(); });
   onScroll(); current = target;
 
-  var last = -1, clock = 0, prevT = performance.now();
+  function uiFrame(b){
+    meters.forEach(function(m, i){ var base = i === activeBeat ? .55 : .1, v = Math.min(1, base + b.kick * (i === activeBeat ? .45 : .18) + b.level * .4 * Math.random()); m.style.height = (v*100).toFixed(1) + '%'; });
+    if (tlCount){ var bar = b.bar || Math.floor(scrollBar), beat = b.beat || (1 + Math.floor((scrollBar % 1) * 4)); tlCount.textContent = 'BAR ' + pad(bar) + '.' + beat + ' · ' + BPM + ' BPM'; }
+    document.documentElement.style.setProperty('--kick', b.kick.toFixed(3));
+  }
+
+  var last = -1, clock = 0, prevT = performance.now(), spin = 0;
+  var tilts  = [ .62, .12, .18, .05, .42, .08, .3 ];
+  var speeds = [ .55, .16, .12, .0,  .1,  .0,  .14 ];
+  var faces  = [ 0,   0,   .7,  1,   0,   1,   .6 ];
+  var sides  = [ 0, 1.7, -1.7, 1.7, -1.7, 1.7, 1.3 ];
+  function lerpArr(arr, k){ var a = Math.floor(k), b = Math.min(a+1, arr.length-1); return arr[a] + (arr[b]-arr[a])*(k-a); }
   function blend(k){
-    var a = Math.floor(k), b = Math.min(a+1, shapes.length-1), f = k - a;
-    // order shapes as authored; non-adjacent jumps (studio to globe) go straight
-    var A = shapes[a], B = shapes[b], i, n3 = N*3;
+    var a = Math.floor(k), b = Math.min(a+1, shapes.length-1), f = k - a, A = shapes[a], B = shapes[b], i, n3 = N*3;
     for (i=0;i<n3;i++){ pos[i] = A.p[i] + (B.p[i]-A.p[i])*f; col[i] = A.c[i] + (B.c[i]-A.c[i])*f; }
-    for (i=0;i<N;i++) siz[i] = A.s[i] + (B.s[i]-A.s[i])*f;
-    geo.attributes.position.needsUpdate = true; geo.attributes.aColor.needsUpdate = true; geo.attributes.aSize.needsUpdate = true;
+    for (i=0;i<N;i++){ siz[i] = A.s[i] + (B.s[i]-A.s[i])*f; kik[i] = A.k[i] + (B.k[i]-A.k[i])*f; par[i] = f < .5 ? A.a[i] : B.a[i]; }
+    ['position','aColor','aSize','aKick','aParam'].forEach(function(n){ geo.attributes[n].needsUpdate = true; });
   }
   function frame(now){
     var dt = Math.min(.05, (now - prevT)/1000); prevT = now; clock += dt;
     current += (target - current) * Math.min(1, dt * (reduce ? 20 : 3.2));
     if (Math.abs(current - last) > .0005){ blend(current); last = current; }
-    var pulse = Math.abs(target - current); mat.uniforms.uPulse.value = Math.min(1, pulse*2);
+    var b = beatState(clock);
+    mat.uniforms.uPulse.value = Math.min(1, Math.abs(target - current)*2);
     mat.uniforms.uTime.value = reduce ? 0 : clock;
-    var spin = reduce ? 0 : clock*.08;
-    // per-shape camera framing
+    mat.uniforms.uK.value = current;
+    mat.uniforms.uKick.value = b.kick;
+    mat.uniforms.uLevel.value = b.level;
     var k = current;
-    var tilt = k > 3.5 && k < 4.5 ? .35 : 0;
-    group.rotation.y = spin + mx*.35;
-    group.rotation.x = -my*.2 + tilt*(1 - Math.abs(k-4)*2);
-    if (k > 2.5 && k < 3.5) group.rotation.z = Math.sin(clock*.5)*.1; else group.rotation.z *= .92;
-    var side = 0; // shift scene away from the text panel on wide screens
-    if (!mobile){ var sides = [0,1.6,-1.6,1.6,-1.6,1.6,1.4]; var a = Math.floor(k), b = Math.min(a+1,6); side = sides[a] + (sides[b]-sides[a])*(k-a); }
+    if (!reduce){
+      spin += lerpArr(speeds, k) * dt * (playing ? 1.35 : 1);
+      var fw = lerpArr(faces, k), home = Math.round(spin / TAU) * TAU;
+      spin += (home - spin) * fw * Math.min(1, dt * 2.5);
+    }
+    group.rotation.y = spin + mx*.35 + (lerpArr(faces, k) > .5 ? Math.sin(clock*.5)*.18 : 0);
+    group.rotation.x = lerpArr(tilts, k) - my*.18;
+    var sc = 1 + b.kick * .025; group.scale.set(sc, sc, sc);
+    var side = mobile ? 0 : lerpArr(sides, k);
     group.position.x += (side - group.position.x) * .08;
     renderer.render(scene, camera);
+    uiFrame(b);
     requestAnimationFrame(frame);
   }
   blend(current); requestAnimationFrame(frame);
 })();
 </script>
+<script>
+/* ---------- Studio booking: rooms, Mon to Fri calendar, request ---------- */
+(function(){
+  var form = document.getElementById('booker'); if (!form) return;
+  var ROOMS = { control: { name: 'Control room', max: 4 }, booth: { name: 'Vocal booth', max: 3 }, lounge: { name: 'The lounge', max: 8 } };
+  var SLOTS = { am: { name: 'Morning', time: '10:00 to 14:00' }, pm: { name: 'Afternoon', time: '14:00 to 18:00' }, day: { name: 'Full day', time: '10:00 to 18:00' } };
+  // England and Wales bank holidays (studio closed)
+  var HOLS = ['2026-12-25','2026-12-28','2027-01-01','2027-03-26','2027-03-29','2027-05-03','2027-05-31','2027-08-30','2027-12-27','2027-12-28','2028-01-03'];
+  var steps = [].slice.call(form.querySelectorAll('.bstep')), pills = [].slice.call(form.querySelectorAll('.stepper li'));
+  var state = { step: 1, room: 'control', date: null, slot: null, busy: {}, configured: null };
+  var grid = document.getElementById('calGrid'), monthEl = document.getElementById('calMonth'), note = document.getElementById('calNote');
+  var slotDay = document.getElementById('slotDay'), ferr = document.getElementById('ferr');
+
+  function iso(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function addWorkingDays(d, n){ var x = new Date(d); while (n > 0){ x.setDate(x.getDate()+1); var w = x.getDay(); if (w > 0 && w < 6 && HOLS.indexOf(iso(x)) < 0) n--; } return x; }
+  var today = new Date(); today.setHours(0,0,0,0);
+  var earliest = addWorkingDays(today, 2), latest = new Date(today); latest.setMonth(latest.getMonth()+3);
+  var view = new Date(earliest.getFullYear(), earliest.getMonth(), 1);
+  var fmtMonth = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' });
+  var fmtDay = new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  function go(n, quiet){
+    state.step = n;
+    steps.forEach(function(s){ s.hidden = +s.dataset.step !== n; });
+    pills.forEach(function(p){ var s = +p.dataset.s; p.classList.toggle('on', s === n); p.classList.toggle('done', s < n); });
+    document.getElementById('bdone').hidden = true;
+    if (n === 2) loadMonth();
+    if (n === 4) review();
+    if (!quiet){ var r = form.getBoundingClientRect(); if (r.top < 0 || r.top > innerHeight*.5) form.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+  form.addEventListener('click', function(e){
+    var t = e.target.closest('[data-next],[data-back]'); if (!t) return;
+    if (t.hasAttribute('data-back')) return go(state.step - 1);
+    if (validate(state.step)) go(state.step + 1);
+  });
+  form.querySelectorAll('input[name="room"]').forEach(function(r){ r.addEventListener('change', function(){ state.room = r.value; state.date = null; state.slot = null; state.busy = {}; document.getElementById('f-people').max = ROOMS[r.value].max; }); });
+
+  // Availability from Outlook via /api/availability. Falls back to "open for requests".
+  var cache = {};
+  function loadMonth(){
+    var from = new Date(view), to = new Date(view.getFullYear(), view.getMonth()+1, 0), key = state.room + iso(from);
+    render();
+    if (cache[key]){ state.busy = cache[key]; render(); return; }
+    fetch('api/availability?room=' + state.room + '&from=' + iso(from) + '&to=' + iso(to)).then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function(j){ state.configured = !!j.configured; cache[key] = j.busy || {}; state.busy = cache[key]; note.textContent = j.configured ? 'Live from the studio calendar. Open days are running; your request is reviewed before it is confirmed.' : note.textContent; render(); })
+      .catch(function(){ state.configured = false; render(); });
+  }
+  function dayState(d){
+    var w = d.getDay(), k = iso(d);
+    if (w === 0 || w === 6) return 'weekend';
+    if (d < earliest || d > latest || HOLS.indexOf(k) >= 0) return 'closed';
+    var b = state.busy[k] || [];
+    if (b.indexOf('am') >= 0 && b.indexOf('pm') >= 0) return 'full';
+    if (b.length) return 'limited';
+    return 'open';
+  }
+  function render(){
+    monthEl.textContent = fmtMonth.format(view);
+    document.getElementById('calPrev').disabled = view <= new Date(earliest.getFullYear(), earliest.getMonth(), 1);
+    document.getElementById('calNext').disabled = new Date(view.getFullYear(), view.getMonth()+1, 1) > latest;
+    grid.innerHTML = '';
+    var first = new Date(view), lead = (first.getDay() + 6) % 7; // Monday = 0
+    if (lead > 4) lead = 0; // month starting on a weekend: first weekday sits in column 1
+    for (var i=0;i<lead;i++){ var sp = document.createElement('span'); sp.className = 'cd pad'; grid.appendChild(sp); }
+    var days = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
+    for (var dnum=1; dnum<=days; dnum++){
+      var d = new Date(view.getFullYear(), view.getMonth(), dnum), st = dayState(d);
+      if (st === 'weekend') continue;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'cd ' + st; b.dataset.date = iso(d);
+      b.innerHTML = '<b>' + dnum + '</b><i aria-hidden="true"></i>';
+      b.setAttribute('aria-label', fmtDay.format(d) + ', ' + ({ open: 'open for requests', limited: 'part booked', full: 'full', closed: 'closed' })[st]);
+      if (st === 'full' || st === 'closed') b.disabled = true;
+      if (state.date === iso(d)) b.classList.add('sel');
+      b.addEventListener('click', pickDay); grid.appendChild(b);
+    }
+    renderSlots();
+  }
+  function pickDay(e){ state.date = e.currentTarget.dataset.date; state.slot = null; render(); }
+  function renderSlots(){
+    var busy = state.date ? (state.busy[state.date] || []) : [];
+    slotDay.textContent = state.date ? fmtDay.format(new Date(state.date + 'T12:00:00')).toUpperCase() : 'PICK A DAY';
+    form.querySelectorAll('input[name="slot"]').forEach(function(s){
+      var taken = s.value === 'day' ? busy.length > 0 : busy.indexOf(s.value) >= 0;
+      s.disabled = !state.date || taken; if (s.disabled) s.checked = false;
+      s.parentNode.classList.toggle('taken', !!state.date && taken);
+      if (state.slot === s.value && !s.disabled) s.checked = true;
+    });
+  }
+  form.querySelectorAll('input[name="slot"]').forEach(function(s){ s.addEventListener('change', function(){ state.slot = s.value; }); });
+  document.getElementById('calPrev').addEventListener('click', function(){ view.setMonth(view.getMonth()-1); loadMonth(); });
+  document.getElementById('calNext').addEventListener('click', function(){ view.setMonth(view.getMonth()+1); loadMonth(); });
+
+  var u18 = document.getElementById('f-u18'), u18Body = document.getElementById('u18Body');
+  u18.addEventListener('change', function(){ u18Body.hidden = !u18.checked; });
+
+  function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function fail(msg, id){ ferr.textContent = msg; ferr.hidden = false; if (id){ var el = document.getElementById(id); el && el.focus(); } return false; }
+  function validate(step){
+    ferr.hidden = true;
+    if (step === 2 && (!state.date || !state.slot)){ alertStep2(); return false; }
+    if (step === 3){
+      if (!val('f-name')) return fail('Add your name so we know who to reply to.', 'f-name');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val('f-email'))) return fail('That email address doesn\'t look right. Check it and try again.', 'f-email');
+      if (!val('f-project')) return fail('Add an artist or project name.', 'f-project');
+      if (!val('f-type')) return fail('Choose what you\'re making.', 'f-type');
+      var ppl = +val('f-people'), max = ROOMS[state.room].max;
+      if (!(ppl >= 1 && ppl <= max)) return fail(ROOMS[state.room].name + ' fits up to ' + max + ' people.', 'f-people');
+      if (u18.checked && (!val('f-gname') || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val('f-gemail')))) return fail('Add a parent or guardian\'s name and email for anyone under 18.', 'f-gname');
+      if (!document.getElementById('c-rules').checked || !document.getElementById('c-privacy').checked) return fail('Tick the studio rules and privacy notice to continue.', 'c-rules');
+    }
+    return true;
+  }
+  function alertStep2(){ slotDay.textContent = state.date ? 'NOW PICK A SESSION' : 'PICK A DAY FIRST'; slotDay.classList.add('flash'); setTimeout(function(){ slotDay.classList.remove('flash'); }, 700); }
+
+  function payload(){
+    return { room: state.room, date: state.date, slot: state.slot, name: val('f-name'), email: val('f-email'), phone: val('f-phone'), project: val('f-project'), type: val('f-type'),
+      people: +val('f-people'), notes: val('f-notes'), under18: u18.checked, guardianName: u18.checked ? val('f-gname') : '', guardianEmail: u18.checked ? val('f-gemail') : '',
+      filming: document.getElementById('c-film').checked, website: val('f-website') };
+  }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
+  function review(){
+    var p = payload(), rows = [
+      ['Room', ROOMS[p.room].name], ['Day', fmtDay.format(new Date(p.date + 'T12:00:00'))], ['Session', SLOTS[p.slot].name + ', ' + SLOTS[p.slot].time],
+      ['Name', p.name], ['Email', p.email], ['Project', p.project], ['Making', p.type], ['People', p.people],
+      ['Under 18', p.under18 ? 'Yes, with ' + p.guardianName : 'No'], ['Filming', p.filming ? 'Open to it' : 'No filming']];
+    document.getElementById('review').innerHTML = '<dl>' + rows.map(function(r){ return '<div><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('') + '</dl>' +
+      '<p class="muted small">Sending this asks for the room. It isn\'t confirmed until you get an email from us saying so.</p>';
+  }
+  function plainText(p, ref){
+    return ['Flavour FM studio request ' + ref, 'Room: ' + ROOMS[p.room].name, 'Day: ' + fmtDay.format(new Date(p.date + 'T12:00:00')), 'Session: ' + SLOTS[p.slot].name + ' (' + SLOTS[p.slot].time + ')',
+      'Name: ' + p.name, 'Email: ' + p.email, p.phone ? 'Phone: ' + p.phone : '', 'Project: ' + p.project, 'Making: ' + p.type, 'People: ' + p.people,
+      'Under 18: ' + (p.under18 ? 'Yes. Guardian: ' + p.guardianName + ', ' + p.guardianEmail : 'No'), 'Filming consent: ' + (p.filming ? 'Yes' : 'No'), p.notes ? 'Notes: ' + p.notes : ''].filter(Boolean).join('\n');
+  }
+  var sendBtn = document.getElementById('sendBtn');
+  form.addEventListener('submit', function(e){
+    e.preventDefault(); if (sendBtn.disabled) return;
+    var p = payload(); sendBtn.disabled = true; sendBtn.firstChild.textContent = 'Sending ';
+    fetch('api/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) })
+      .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, status: r.status, j: j }; }); })
+      .then(function(res){
+        if (res.ok) return done(res.j.reference, false, p);
+        if (res.status === 409){ state.busy[p.date] = ['am','pm']; go(2); slotDay.textContent = 'THAT SESSION HAS JUST GONE. PICK ANOTHER'; return; }
+        if (res.status === 503 || res.j.configured === false) return done(localRef(), true, p);
+        ferr.textContent = res.j.error || 'Something went wrong sending your request. Try again in a minute.'; ferr.hidden = false; go(3);
+      })
+      .catch(function(){ done(localRef(), true, p); })
+      .then(function(){ sendBtn.disabled = false; sendBtn.firstChild.textContent = 'Send request '; });
+  });
+  function localRef(){ return 'FFM-' + Math.random().toString(36).slice(2, 8).toUpperCase(); }
+  function done(ref, fallback, p){
+    steps.forEach(function(s){ s.hidden = true; }); pills.forEach(function(x){ x.classList.add('done'); x.classList.remove('on'); });
+    document.getElementById('bdone').hidden = false; document.getElementById('doneRef').textContent = ref;
+    document.getElementById('fallback').hidden = !fallback;
+    document.getElementById('doneTitle').textContent = fallback ? 'Nearly there.' : 'You\'re in the queue.';
+    document.getElementById('doneBody').textContent = fallback ? 'Your request is ready. One last step below.' : 'We\'ve sent a copy to ' + p.email + '. This is a request, not a confirmed booking yet. We\'ll come back to you by email, usually within three working days.';
+    if (fallback) document.getElementById('fallbackText').textContent = plainText(p, ref);
+  }
+  document.getElementById('copyReq').addEventListener('click', function(){
+    var el = document.getElementById('fallbackText'), t = el.textContent;
+    function sel(){ var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).catch(sel); else sel();
+  });
+  document.getElementById('newReq').addEventListener('click', function(){ form.reset(); u18Body.hidden = true; state.date = null; state.slot = null; state.room = 'control'; go(1); });
+  if ('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ document.documentElement.classList.toggle('in-book', e.isIntersecting); }); }, { threshold: .05 }).observe(document.getElementById('book')); }
+  go(1, true);
+})();
+</script>
+
 </body>
 </html>
