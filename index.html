@@ -8,19 +8,19 @@
 <meta name="theme-color" content="#020a06">
 <meta property="og:title" content="Flavour FM · Driven by Sound">
 <meta property="og:description" content="Wingstop UK's home for new music. Find talent. Create and connect. Make originals. Inspire more. Find your flavour.">
-<meta property="og:image" content="/img/og.jpg">
-<link rel="icon" href="/img/favicon.png">
-<link rel="preload" href="/fonts/RocGrotesk-CompressedBlack.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/RocGrotesk-WideBold.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:image" content="img/og.jpg">
+<link rel="icon" href="img/favicon.png">
+<link rel="preload" href="fonts/RocGrotesk-CompressedBlack.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/RocGrotesk-WideBold.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:"Roc Compressed";src:url(/fonts/RocGrotesk-CompressedExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
-@font-face{font-family:"Roc Compressed";src:url(/fonts/RocGrotesk-CompressedBlack.woff2) format("woff2");font-weight:900;font-display:swap}
-@font-face{font-family:"Roc Condensed";src:url(/fonts/RocGrotesk-CondensedExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
-@font-face{font-family:"Roc Condensed";src:url(/fonts/RocGrotesk-CondensedMedium.woff2) format("woff2");font-weight:500;font-display:swap}
-@font-face{font-family:"Roc Grotesk";src:url(/fonts/RocGrotesk-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"Roc Grotesk";src:url(/fonts/RocGrotesk-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
-@font-face{font-family:"Roc Wide";src:url(/fonts/RocGrotesk-WideMedium.woff2) format("woff2");font-weight:500;font-display:swap}
-@font-face{font-family:"Roc Wide";src:url(/fonts/RocGrotesk-WideBold.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Roc Compressed";src:url(fonts/RocGrotesk-CompressedExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Roc Compressed";src:url(fonts/RocGrotesk-CompressedBlack.woff2) format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Roc Condensed";src:url(fonts/RocGrotesk-CondensedExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Roc Condensed";src:url(fonts/RocGrotesk-CondensedMedium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Roc Grotesk";src:url(fonts/RocGrotesk-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Roc Grotesk";src:url(fonts/RocGrotesk-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Roc Wide";src:url(fonts/RocGrotesk-WideMedium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Roc Wide";src:url(fonts/RocGrotesk-WideBold.woff2) format("woff2");font-weight:700;font-display:swap}
 
 /* Concept: the Flavour Spectrum. Wingstop's green night is the ground; Flavour FM's own treatment is a
    frequency spectrum built from Wingstop flavour colours, one band per purpose beat.
@@ -122,7 +122,7 @@ header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(
 .beat{min-height:120svh;display:flex;align-items:center;padding-block:14vh}
 .beat .wrap{width:100%}
 .beat .panel{max-width:600px;position:relative}
-.beat.right .panel{margin-left:auto}
+.beat.right .panel{margin-left:auto;margin-right:clamp(0px,5vw,90px)}
 .beat .no{font-family:var(--wide);font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--c);display:flex;align-items:center;gap:14px}
 .beat .no::after{content:"";height:1px;width:80px;background:var(--c);opacity:.6}
 .beat h2{font-size:clamp(78px,12vw,190px);margin-top:20px;color:var(--egg);text-shadow:0 0 60px rgba(2,10,6,.8)}
@@ -130,10 +130,15 @@ header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(
 .beat p.copy{margin-top:26px;font-size:clamp(17px,1.4vw,20px);line-height:1.55;max-width:44ch;color:var(--egg)}
 .beat .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
 .beat .chips span{font-family:var(--wide);font-weight:500;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 50%,transparent);background:rgba(2,10,6,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.beat .shot{margin-top:30px;display:flex;gap:12px}
-.beat .shot figure{margin:0;width:150px;aspect-ratio:4/5;max-width:100%;border-radius:12px;overflow:hidden;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);transform:rotate(-4deg);box-shadow:0 20px 50px rgba(0,0,0,.5)}
-.beat .shot figure+figure{transform:rotate(5deg) translateY(16px)}
-.beat .shot img{width:100%;height:100%;object-fit:cover}
+.window{position:relative;margin:30px 0 0;border-radius:18px;overflow:hidden;aspect-ratio:16/10;max-width:100%;background:#000;
+  clip-path:inset(calc((1 - var(--o,1)) * 38%) calc((1 - var(--o,1)) * 10%) round 18px);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 55%,transparent),0 30px 80px -20px color-mix(in srgb,var(--c) 45%,transparent)}
+.window.tall{aspect-ratio:4/5;max-width:440px}
+.window img{width:100%;height:100%;object-fit:cover;transform:scale(calc(1.18 - var(--o,1) * .18));transition:transform .2s linear}
+.window::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px),linear-gradient(180deg,transparent 60%,rgba(2,10,6,.7));mix-blend-mode:multiply}
+.window figcaption{position:absolute;left:14px;bottom:14px;z-index:2;display:flex;align-items:center;gap:8px;font-family:var(--wide);font-weight:700;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;background:rgba(2,10,6,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:7px 11px;border-radius:999px}
+.window figcaption i{width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
 .reveal{transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity 1s}
 .js .reveal.pre{transform:translateY(40px);opacity:.25}
 @media (max-width:700px){
@@ -186,6 +191,26 @@ header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(
 @keyframes blink{50%{opacity:.15}}
 .frame p{position:relative;padding:0 12px 10px;font-family:var(--sub);font-weight:500;font-size:13px;color:var(--muted)}
 .frame p strong{display:block;font-weight:800;color:var(--egg);text-transform:uppercase;letter-spacing:.08em;font-size:14px}
+.studio-gallery{display:grid;grid-template-columns:1.25fr .9fr .85fr;gap:12px;margin-top:clamp(36px,5vw,60px)}
+.studio-gallery figure{margin:0;position:relative;border-radius:20px;overflow:hidden;background:#04170e;min-height:0}
+.studio-gallery img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.studio-gallery figure:hover img{transform:scale(1.04)}
+.sg-main{aspect-ratio:4/5;max-width:100%}
+.sg-side{aspect-ratio:auto}
+.studio-gallery figcaption{position:absolute;left:16px;right:16px;bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--egg)}
+.studio-gallery .rec{display:inline-flex;align-items:center;gap:7px;background:#c8102e;color:#fff;padding:6px 10px;border-radius:4px}
+.studio-gallery .rec i{width:7px;height:7px;border-radius:50%;background:#fff;animation:blink 1.4s steps(1) infinite}
+.sg-spec{background:#04170e;color:var(--egg);border-radius:20px;padding:clamp(22px,2.4vw,30px);display:flex;flex-direction:column;gap:18px;min-width:0}
+.sg-spec .k{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em;color:var(--b1)}
+.sg-spec ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.sg-spec li{padding:14px 0;border-bottom:1px solid rgba(240,233,220,.12);display:flex;flex-direction:column;gap:4px}
+.sg-spec li b{font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(28px,2.6vw,38px);line-height:.9;color:var(--b1)}
+.sg-spec li span{color:var(--muted);font-size:14.5px}
+.sg-spec .meter{display:flex;gap:3px;align-items:flex-end;height:40px;margin-top:auto}
+.sg-spec .meter i{flex:1;background:var(--b1);border-radius:2px;animation:eq 1s ease-in-out infinite alternate}
+@keyframes eq{from{height:15%}to{height:100%}}
+@media (max-width:900px){.studio-gallery{grid-template-columns:1fr 1fr}.sg-main{grid-column:span 2;aspect-ratio:4/5}.sg-side{aspect-ratio:3/4}.sg-spec{grid-column:span 2}}
+@media (max-width:520px){.sg-side{grid-column:span 2}}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px);margin-top:clamp(64px,8vw,110px)}
 .who{list-style:none;margin:24px 0 0;padding:0;border-top:2px solid #04170e}
 .who li{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid rgba(4,23,14,.22);font-family:var(--sub);font-weight:800;text-transform:uppercase;font-size:clamp(17px,1.6vw,20px)}
@@ -224,6 +249,25 @@ header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(
 .season .foot-note{margin-top:22px;color:var(--muted);font-size:15px}
 @media (max-width:900px){.sleeves{grid-template-columns:1fr}.sleeve{aspect-ratio:auto;min-height:340px}}
 
+/* ---------- Live ---------- */
+.live{padding-block:clamp(80px,10vw,140px);border-top:1px solid var(--line)}
+.live h2{font-size:clamp(64px,10vw,150px)}
+.live-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:end}
+.live-head p{max-width:42ch;font-size:clamp(16px,1.3vw,19px)}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(150px,17vw,250px);grid-auto-flow:dense;gap:10px;margin-top:clamp(40px,5vw,64px)}
+.t{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#06140d}
+.t.big{grid-column:span 2;grid-row:span 2}
+.t.wide{grid-column:span 2}
+.t img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1),filter .5s}
+.t::before{content:"";position:absolute;inset:0;z-index:1;background:var(--c);mix-blend-mode:color;opacity:0;transition:opacity .45s}
+.t::after{content:"";position:absolute;inset:0;z-index:1;box-shadow:inset 0 0 0 0 var(--c);border-radius:16px;transition:box-shadow .35s}
+.t:hover img{transform:scale(1.06)}
+.t:hover::before{opacity:.55}
+.t:hover::after{box-shadow:inset 0 0 0 2px var(--c)}
+.t figcaption{position:absolute;left:12px;bottom:12px;z-index:2;font-family:var(--wide);font-weight:700;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;background:rgba(2,10,6,.66);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:7px 11px;border-radius:999px;display:flex;align-items:center;gap:7px}
+.t figcaption::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+@media (max-width:860px){.live-head{grid-template-columns:1fr}.bento{grid-template-columns:1fr 1fr;grid-auto-rows:46vw}.t.big{grid-row:span 1}}
+
 /* ---------- Get in ---------- */
 .getin{padding-block:clamp(80px,10vw,140px);border-top:1px solid var(--line)}
 .getin h2{font-size:clamp(64px,10vw,150px)}
@@ -261,12 +305,13 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
 
 <header class="top" id="top">
   <div class="wrap">
-    <a class="mark" href="#home" aria-label="Flavour FM home"><img src="/img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676"></a>
+    <a class="mark" href="#home" aria-label="Flavour FM home"><img src="img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676"></a>
     <nav aria-label="Main">
       <a href="#purpose">Purpose</a>
       <a href="#spectrum">The spectrum</a>
       <a href="#studio">The Studio</a>
       <a href="#season">Season one</a>
+      <a href="#live">Live</a>
     </nav>
     <a class="cta" href="#get-in">Get in</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false">Menu</button>
@@ -283,7 +328,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
 
 <main>
   <section class="hero" id="home" data-shape="0">
-    <div class="logo3d" id="logo3d"><img src="/img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676"></div>
+    <div class="logo3d" id="logo3d"><img src="img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676"></div>
     <p class="tag">Driven by sound</p>
     <div class="specbar" aria-hidden="true"></div>
     <p class="lede">Wingstop's home for new music. A studio to make it, stages to play it, and restaurants across the UK and Ireland to get it heard.</p>
@@ -304,6 +349,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
       <h2>Find <em>talent.</em></h2>
       <p class="copy">In every city there's someone the industry hasn't caught yet. Our creative leads, partners and crews are out in the scenes, listening for the sound before the numbers arrive.</p>
       <div class="chips"><span>Scouting</span><span>Open submissions</span><span>Partner scenes</span></div>
+      <figure class="window"><img src="img/mic-green.webp" alt="A young artist rapping on the Flavour FM stage in green light" loading="lazy"><figcaption><i></i>On the mic · Flavour FM Live</figcaption></figure>
     </div></div>
   </section>
 
@@ -313,7 +359,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
       <h2>Create <em>&amp; connect.</em></h2>
       <p class="copy">Talent grows in company. We give artists the room, the kit and the time, then put them next to producers, writers and creators they would never otherwise meet.</p>
       <div class="chips"><span>Studio time</span><span>Writing camps</span><span>Collabs</span></div>
-      <div class="shot"><figure><img src="/img/crew.jpg" alt="Two friends in caps grinning at the camera" loading="lazy"></figure><figure><img src="/img/crowd-cheers.jpg" alt="Friends raising their cups together" loading="lazy"></figure></div>
+      <figure class="window tall"><img src="img/studio-lounge.webp" alt="Three artists on the green sofa in the Flavour FM studio lounge" loading="lazy"><figcaption><i></i>The lounge · Wingstop HQ</figcaption></figure>
     </div></div>
   </section>
 
@@ -323,6 +369,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
       <h2>Original <em>music.</em></h2>
       <p class="copy">Everything that comes out of Flavour FM is new. Original tracks, original shows and original sessions, credited to the people who made them and released where their fans listen.</p>
       <div class="chips"><span>Records</span><span>Sessions</span><span>Shows</span></div>
+      <figure class="window"><img src="img/stage-orange.webp" alt="Artists performing to a packed crowd under orange stage light" loading="lazy"><figcaption><i></i>First play · live</figcaption></figure>
     </div></div>
   </section>
 
@@ -332,7 +379,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
       <h2>Inspire <em>more.</em></h2>
       <p class="copy">One artist's breakthrough becomes the next kid's reason to start. We take every story home, with takeovers in their own city and workshops with Youth Music, so the ripple keeps going.</p>
       <div class="chips"><span>Home-city takeovers</span><span>The Academy</span><span>Live nights</span></div>
-      <div class="shot"><figure><img src="/img/night-out.jpg" alt="A fan cheering at a launch night" loading="lazy"></figure><figure><img src="/img/first-bite.jpg" alt="Two friends mid-bite at a Wingstop table" loading="lazy"></figure></div>
+      <figure class="window"><img src="img/crowd-pink.webp" alt="A performer leaning into a front row filming on their phones" loading="lazy"><figcaption><i></i>Front row · the ripple</figcaption></figure>
     </div></div>
   </section>
 
@@ -342,6 +389,7 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
       <h2>Find their <em>flavour.</em></h2>
       <p class="copy">The point of all of it. A sound that's unmistakably theirs, and the confidence to keep making it. When an artist finds their flavour, everyone around them hears it.</p>
       <div class="chips"><span>Identity</span><span>Confidence</span><span>Longevity</span></div>
+      <figure class="window tall"><img src="img/dj-blue.webp" alt="A DJ behind the Flavour FM booth with light beams over the crowd" loading="lazy"><figcaption><i></i>Their sound · their crowd</figcaption></figure>
     </div></div>
   </section>
 
@@ -370,18 +418,19 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
   <section class="studio" aria-label="The studio in detail">
     <div class="wrap">
       <span class="eyebrow"><i></i>The room</span>
-      <h3 style="margin-top:18px">Three rooms. One goal: get it made.</h3>
-      <div class="rooms">
-        <article class="room"><span class="k">ROOM 01</span><h4>Live room</h4><p>Space to play together. Tracking, rehearsals and sessions shot for camera.</p><div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
-        <article class="room"><span class="k">ROOM 02</span><h4>Control room</h4><p>Where the record takes shape. Production, mixing and playback with the people who made it.</p><div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
-        <article class="room"><span class="k">ROOM 03</span><h4>Booth</h4><p>Vocals, voice and conversation. Built for the mic, from the first take to the interview.</p><div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
-      </div>
-      <div class="shots">
-        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>The live room</strong>Studio photography coming soon</p></div>
-        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>The desk</strong>Coming soon</p></div>
-        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>The booth</strong>Coming soon</p></div>
-        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>On the walls</strong>Coming soon</p></div>
-        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>Session days</strong>Coming soon</p></div>
+      <h3 style="margin-top:18px">Three rooms.<br>One job: get it made.</h3>
+      <div class="studio-gallery">
+        <figure class="sg-main"><img src="img/studio-desk.webp" alt="The Flavour FM control room at Wingstop HQ: desk, monitors and the vocal booth through the glass" loading="lazy"><figcaption><span class="rec"><i></i>Mic live</span>The control room</figcaption></figure>
+        <figure class="sg-side"><img src="img/studio-lounge.webp" alt="Three artists on the green leather sofa under the Wingstop and Flavour FM signs" loading="lazy"><figcaption>The lounge</figcaption></figure>
+        <div class="sg-spec">
+          <span class="k">IN THE ROOM</span>
+          <ul>
+            <li><b>Control room</b><span>Production desk, studio monitors, the screen and the keys</span></li>
+            <li><b>Vocal booth</b><span>Through the glass. When the light says Mic Live, you're on</span></li>
+            <li><b>The lounge</b><span>Where sessions start, ideas get played back and people meet</span></li>
+          </ul>
+          <div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
       </div>
       <div class="split">
         <div>
@@ -430,6 +479,27 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
       </div>
     </section>
 
+    <section class="live" id="live">
+      <div class="wrap">
+        <div class="live-head">
+          <div>
+            <span class="eyebrow" style="color:var(--b4)"><i></i>Flavour FM Live</span>
+            <h2 style="margin-top:22px">Already<br>on air.</h2>
+          </div>
+          <p class="muted">New artists on the mic, the crowd at the barrier and the booth lit up. Every night we throw is a session, a show and a reason to come back.</p>
+        </div>
+        <div class="bento">
+          <figure class="t big" style="--c:var(--b3)"><img src="img/bring-the-flavour.webp" alt="A packed crowd in front of a glowing Bring the Flavour sign" loading="lazy"><figcaption>Bring the flavour</figcaption></figure>
+          <figure class="t" style="--c:var(--b4)"><img src="img/dancers-red.webp" alt="Two dancers in front of the Flavour FM DJ booth" loading="lazy"><figcaption>The booth</figcaption></figure>
+          <figure class="t" style="--c:var(--b1)"><img src="img/crowd-green.webp" alt="A crowd under green light and a Wingstop logo projection" loading="lazy"><figcaption>The floor</figcaption></figure>
+          <figure class="t wide" style="--c:var(--b5)"><img src="img/crowd-blue-stage.webp" alt="A performer on stage singing to a crowd holding up phones" loading="lazy"><figcaption>Front row</figcaption></figure>
+          <figure class="t" style="--c:var(--b3)"><img src="img/live-smile.webp" alt="An artist smiling on stage with a microphone in red light" loading="lazy"><figcaption>First show</figcaption></figure>
+          <figure class="t" style="--c:var(--b1)"><img src="img/booth-green.webp" alt="The Flavour FM DJ booth glowing green beside Wingstop props" loading="lazy"><figcaption>Lit up</figcaption></figure>
+          <figure class="t wide" style="--c:var(--b5)"><img src="img/phones-blue.webp" alt="A crowd in blue light filming the stage on their phones" loading="lazy"><figcaption>The crowd</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
     <section class="getin" id="get-in">
       <div class="wrap">
         <span class="eyebrow" style="color:var(--b2)"><i></i>Get in</span>
@@ -455,14 +525,14 @@ footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bot
   <div class="wrap">
     <div class="giant" aria-hidden="true">Driven by sound</div>
     <div class="foot">
-      <img src="/img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676">
+      <img src="img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676">
       <small>Flavour FM is part of Wingstop UK &amp; Ireland, in partnership with Youth Music.<br>© 2026 Lemon Pepper Holdings Ltd.</small>
     </div>
   </div>
 </footer>
 <div class="toast" id="toast" role="status">Copied</div>
 
-<script src="/js/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous"></script>
 <script>
 document.documentElement.classList.add('js');
 (function(){
@@ -502,6 +572,11 @@ document.documentElement.classList.add('js');
 
   // EQ meters: randomise timing
   document.querySelectorAll('.meter i').forEach(function(i){ i.style.animationDuration = (0.45 + Math.random()*0.8) + 's'; i.style.animationDelay = (-Math.random()) + 's'; });
+
+  // Photo windows open like a signal as each beat arrives
+  var wins = [].slice.call(document.querySelectorAll('.window'));
+  function openWindows(){ wins.forEach(function(w){ var r = w.getBoundingClientRect(); var p = 1 - (r.top - innerHeight*.35) / (innerHeight*.55); p = Math.max(0, Math.min(1, p)); w.style.setProperty('--o', reduce ? 1 : (0.35 + p*0.65).toFixed(3)); }); }
+  addEventListener('scroll', openWindows, { passive: true }); addEventListener('resize', openWindows); openWindows();
 
   // Header + rail state
   var rail = document.getElementById('rail'), railLinks = [].slice.call(rail.querySelectorAll('a'));
