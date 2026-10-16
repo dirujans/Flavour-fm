@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flavour FM · Driven by Sound</title>
+<meta name="description" content="Flavour FM is Wingstop UK's home for new music. We find talent, give it a room, make original music and take it home to the crowd.">
+<meta name="theme-color" content="#020a06">
+<meta property="og:title" content="Flavour FM · Driven by Sound">
+<meta property="og:description" content="Wingstop UK's home for new music. Find talent. Create and connect. Make originals. Inspire more. Find your flavour.">
+<meta property="og:image" content="/img/og.jpg">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preload" href="/fonts/RocGrotesk-CompressedBlack.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/RocGrotesk-WideBold.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Roc Compressed";src:url(/fonts/RocGrotesk-CompressedExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Roc Compressed";src:url(/fonts/RocGrotesk-CompressedBlack.woff2) format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Roc Condensed";src:url(/fonts/RocGrotesk-CondensedExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Roc Condensed";src:url(/fonts/RocGrotesk-CondensedMedium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Roc Grotesk";src:url(/fonts/RocGrotesk-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Roc Grotesk";src:url(/fonts/RocGrotesk-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Roc Wide";src:url(/fonts/RocGrotesk-WideMedium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Roc Wide";src:url(/fonts/RocGrotesk-WideBold.woff2) format("woff2");font-weight:700;font-display:swap}
+
+/* Concept: the Flavour Spectrum. Wingstop's green night is the ground; Flavour FM's own treatment is a
+   frequency spectrum built from Wingstop flavour colours, one band per purpose beat.
+   Flavour Club owns green + lime + the skew. Flavour FM owns the spectrum, Roc Wide labels and light-in-motion. */
+:root{
+  --night:#020a06;       /* studio-black, biased to Wingstop Green */
+  --green:#084227;       /* Wingstop Green */
+  --green-2:#0c4c2d;
+  --egg:#f0e9dc;         /* Eggshell, the human voice */
+  --muted:#93ab9b;
+  --line:rgba(240,233,220,.14);
+  /* The Flavour Spectrum: five bands, Wingstop flavour colours */
+  --b1:#d8f655;          /* Lime            · Find talent */
+  --b2:#ffcf00;          /* Lemon Pepper    · Create and connect */
+  --b3:#ff7500;          /* Mango Habanero  · Original music */
+  --b4:#ff3b4e;          /* Atomic, lifted for screen · Inspire more */
+  --b5:#00b5b9;          /* Hawaiian        · Find their flavour */
+  --spectrum:linear-gradient(90deg,var(--b1),var(--b2) 25%,var(--b3) 50%,var(--b4) 75%,var(--b5));
+  --display:"Roc Compressed","Arial Narrow",Impact,sans-serif;
+  --sub:"Roc Condensed","Arial Narrow",sans-serif;
+  --wide:"Roc Wide","Helvetica Neue",Arial,sans-serif;
+  --body:"Roc Grotesk","Helvetica Neue",Arial,sans-serif;
+  --pad-l:max(20px, env(safe-area-inset-left, 0px));
+  --pad-r:max(20px, env(safe-area-inset-right, 0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--night);color:var(--egg);font-family:var(--body);font-weight:400;font-size:17px;line-height:1.55;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--b1);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1280px;margin:0 auto;padding-left:var(--pad-l);padding-right:var(--pad-r)}
+p{margin:0}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;line-height:.84;letter-spacing:-.005em;text-wrap:balance}
+.eyebrow{font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:11px;display:inline-flex;align-items:center;gap:10px;color:var(--egg)}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 12px currentColor;flex:none}
+.muted{color:var(--muted)}
+.spec-text{background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- 3D stage ---------- */
+#stage{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;
+  background:radial-gradient(120% 80% at 50% 40%,#06301c 0%,var(--night) 60%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(2,10,6,.75) 100%)}
+main,header,footer,.rail{position:relative;z-index:2}
+
+/* ---------- Header ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--night)}
+header.top{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+header.top.solid{background:rgba(2,10,6,.7);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border-bottom-color:var(--line)}
+.top .wrap{display:flex;align-items:center;gap:30px;height:72px}
+.top .mark img{height:40px;width:auto}
+.top nav{display:flex;gap:28px;margin-left:auto}
+.top nav a{font-family:var(--wide);font-weight:500;text-transform:uppercase;letter-spacing:.14em;font-size:11px;text-decoration:none;opacity:.75;transition:opacity .2s}
+.top nav a:hover{opacity:1}
+.top .cta{font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:11px;text-decoration:none;padding:12px 18px;border-radius:999px;color:var(--night);background:var(--egg);white-space:nowrap}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--egg);font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:10px;padding:10px 14px;border-radius:999px;cursor:pointer}
+@media (max-width:960px){
+  .top nav,.top .cta{display:none}
+  .menu-btn{display:block}
+  .top.open{background:var(--night)}
+  .top.open nav{display:flex;position:absolute;top:72px;left:0;right:0;flex-direction:column;gap:0;background:var(--night);border-bottom:1px solid var(--line);padding:6px var(--pad-r) 18px var(--pad-l)}
+  .top.open nav a{padding:15px 0;font-size:13px;border-bottom:1px solid var(--line);opacity:1}
+}
+
+/* ---------- Spectrum rail (progress) ---------- */
+.rail{position:fixed;right:max(18px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:10px;opacity:0;transition:opacity .4s}
+.rail.on{opacity:1}
+.rail a{display:flex;align-items:center;justify-content:flex-end;gap:10px;text-decoration:none}
+.rail a span{font-family:var(--wide);font-weight:700;font-size:9px;letter-spacing:.16em;text-transform:uppercase;opacity:0;transform:translateX(6px);transition:all .25s;white-space:nowrap}
+.rail a:hover span,.rail a.active span{opacity:1;transform:none}
+.rail a b{width:4px;height:28px;border-radius:4px;background:rgba(240,233,220,.2);transition:all .3s}
+.rail a.active b{height:46px;background:var(--c);box-shadow:0 0 16px var(--c)}
+@media (max-width:700px){.rail{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-block:120px 80px;padding-left:var(--pad-l);padding-right:var(--pad-r);position:relative}
+.logo3d{perspective:900px;width:min(860px,92vw);margin:0 auto}
+.logo3d img{width:100%;height:auto;transform-style:preserve-3d;will-change:transform;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6));animation:drop 1.2s cubic-bezier(.2,.9,.25,1.2) both}
+@keyframes drop{from{transform:translateY(-30px) rotateX(35deg) scale(.92)}to{transform:none}}
+.hero .tag{margin-top:34px;font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.42em;font-size:clamp(12px,1.3vw,16px);padding-left:.42em}
+.hero .lede{margin-top:20px;max-width:46ch;color:var(--muted);font-size:clamp(16px,1.3vw,19px)}
+.specbar{height:3px;width:min(420px,70vw);margin:30px auto 0;border-radius:3px;background:var(--spectrum);box-shadow:0 0 24px rgba(255,117,0,.45);position:relative;overflow:hidden}
+.specbar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);width:30%;animation:sweep 3.2s ease-in-out infinite}
+@keyframes sweep{from{transform:translateX(-120%)}to{transform:translateX(420%)}}
+.scrollcue{position:absolute;bottom:calc(28px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:10px}
+.scrollcue::after{content:"";width:1px;height:42px;background:linear-gradient(var(--egg),transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- Manifesto ---------- */
+.manifesto{padding-block:clamp(80px,14vw,180px)}
+.manifesto p.big{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(46px,7.4vw,112px);line-height:.88;max-width:16ch}
+.manifesto p.big span{color:var(--muted)}
+.manifesto .side{margin-top:34px;max-width:52ch;color:var(--muted);font-size:clamp(16px,1.3vw,19px)}
+
+/* ---------- Purpose beats ---------- */
+.beat{min-height:120svh;display:flex;align-items:center;padding-block:14vh}
+.beat .wrap{width:100%}
+.beat .panel{max-width:600px;position:relative}
+.beat.right .panel{margin-left:auto}
+.beat .no{font-family:var(--wide);font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--c);display:flex;align-items:center;gap:14px}
+.beat .no::after{content:"";height:1px;width:80px;background:var(--c);opacity:.6}
+.beat h2{font-size:clamp(78px,12vw,190px);margin-top:20px;color:var(--egg);text-shadow:0 0 60px rgba(2,10,6,.8)}
+.beat h2 em{font-style:italic;color:var(--c);display:block;text-shadow:0 0 40px color-mix(in srgb,var(--c) 45%,transparent)}
+.beat p.copy{margin-top:26px;font-size:clamp(17px,1.4vw,20px);line-height:1.55;max-width:44ch;color:var(--egg)}
+.beat .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.beat .chips span{font-family:var(--wide);font-weight:500;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 50%,transparent);background:rgba(2,10,6,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.beat .shot{margin-top:30px;display:flex;gap:12px}
+.beat .shot figure{margin:0;width:150px;aspect-ratio:4/5;max-width:100%;border-radius:12px;overflow:hidden;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);transform:rotate(-4deg);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.beat .shot figure+figure{transform:rotate(5deg) translateY(16px)}
+.beat .shot img{width:100%;height:100%;object-fit:cover}
+.reveal{transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity 1s}
+.js .reveal.pre{transform:translateY(40px);opacity:.25}
+@media (max-width:700px){
+  .beat{min-height:105svh}
+  .beat .panel{padding:26px 22px;border-radius:18px;background:rgba(2,10,6,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line)}
+}
+
+/* ---------- Spectrum summary ---------- */
+.summary{padding-block:clamp(90px,12vw,160px)}
+.summary h2{font-size:clamp(60px,9vw,140px)}
+.bands{margin-top:clamp(40px,5vw,70px);display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.band{position:relative;border-radius:16px;padding:22px 20px 24px;min-height:230px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:rgba(2,10,6,.55);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s;min-width:0}
+.band::before{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--h);background:linear-gradient(0deg,color-mix(in srgb,var(--c) 55%,transparent),transparent);transition:height .6s cubic-bezier(.2,.8,.2,1)}
+.band:hover{transform:translateY(-8px);border-color:var(--c)}
+.band:hover::before{height:100%}
+.band>*{position:relative}
+.band .k{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em;color:var(--c)}
+.band h3{font-size:clamp(30px,2.6vw,40px);line-height:.88}
+@media (max-width:900px){.bands{grid-template-columns:1fr 1fr}.band:last-child{grid-column:span 2}.band{min-height:170px}}
+
+/* ---------- Studio ---------- */
+.studio-intro{min-height:110svh;display:flex;align-items:center;padding-block:14vh}
+.studio-intro h2{font-size:clamp(96px,17vw,280px);line-height:.78}
+.studio-intro h2 em{font-style:italic;-webkit-text-stroke:2px var(--egg);color:transparent;display:block}
+.studio-intro p{margin-top:28px;max-width:46ch;font-size:clamp(17px,1.4vw,20px)}
+.studio{background:var(--b1);color:#04170e;padding-block:clamp(80px,10vw,140px);border-radius:32px 32px 0 0;position:relative;z-index:3}
+.studio .eyebrow{color:#04170e}
+.studio h3{font-size:clamp(44px,5vw,72px)}
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:clamp(36px,5vw,60px)}
+.room{background:#04170e;color:var(--egg);border-radius:18px;padding:clamp(24px,2.6vw,34px);display:flex;flex-direction:column;gap:14px;min-width:0;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.room:hover{transform:translateY(-6px)}
+.room .k{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em;color:var(--b1)}
+.room h4{margin:0;font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(40px,4vw,56px);line-height:.86;color:var(--b1)}
+.room p{color:var(--muted)}
+.room .meter{display:flex;gap:3px;align-items:flex-end;height:34px;margin-top:auto}
+.room .meter i{flex:1;background:var(--b1);border-radius:2px;opacity:.85;animation:eq 1s ease-in-out infinite alternate}
+@keyframes eq{from{height:15%}to{height:100%}}
+.shots{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:12px}
+.frame{border-radius:18px;background:#04170e;min-height:190px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:20px}
+.frame:first-child{grid-row:span 2;min-height:400px}
+.frame::before{content:"";position:absolute;inset:16px;
+  background:
+   linear-gradient(var(--b1),var(--b1)) left top/22px 2px,linear-gradient(var(--b1),var(--b1)) left top/2px 22px,
+   linear-gradient(var(--b1),var(--b1)) right top/22px 2px,linear-gradient(var(--b1),var(--b1)) right top/2px 22px,
+   linear-gradient(var(--b1),var(--b1)) left bottom/22px 2px,linear-gradient(var(--b1),var(--b1)) left bottom/2px 22px,
+   linear-gradient(var(--b1),var(--b1)) right bottom/22px 2px,linear-gradient(var(--b1),var(--b1)) right bottom/2px 22px;
+  background-repeat:no-repeat;opacity:.55}
+.frame .rec{position:absolute;top:28px;left:30px;font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em;color:var(--egg);display:flex;align-items:center;gap:8px}
+.frame .rec i{width:8px;height:8px;border-radius:50%;background:#ff3b4e;animation:blink 1.4s steps(1) infinite}
+@keyframes blink{50%{opacity:.15}}
+.frame p{position:relative;padding:0 12px 10px;font-family:var(--sub);font-weight:500;font-size:13px;color:var(--muted)}
+.frame p strong{display:block;font-weight:800;color:var(--egg);text-transform:uppercase;letter-spacing:.08em;font-size:14px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px);margin-top:clamp(64px,8vw,110px)}
+.who{list-style:none;margin:24px 0 0;padding:0;border-top:2px solid #04170e}
+.who li{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid rgba(4,23,14,.22);font-family:var(--sub);font-weight:800;text-transform:uppercase;font-size:clamp(17px,1.6vw,20px)}
+.who li span{font-family:var(--body);font-weight:400;text-transform:none;color:rgba(4,23,14,.68);font-size:15px;text-align:right}
+.steps{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:10px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:50px 1fr;gap:14px;background:rgba(4,23,14,.08);border-radius:14px;padding:18px 20px;counter-increment:s}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--display);font-weight:900;font-style:italic;font-size:34px;line-height:.9}
+.steps strong{display:block;font-family:var(--sub);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.steps span{color:rgba(4,23,14,.72);font-size:15px}
+.note{margin-top:18px;font-size:15px;color:rgba(4,23,14,.78);padding-left:16px;border-left:2px solid #04170e}
+@media (max-width:900px){.rooms,.split{grid-template-columns:1fr}.shots{grid-template-columns:1fr 1fr}.frame:first-child{grid-column:span 2;grid-row:auto;min-height:240px}}
+
+/* ---------- Season one ---------- */
+.after{background:var(--night);position:relative;z-index:3}
+.season{padding-block:clamp(90px,12vw,160px)}
+.season h2{font-size:clamp(64px,10vw,150px)}
+.sleeves{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(40px,5vw,64px);perspective:1200px}
+.sleeve{position:relative;aspect-ratio:1;max-width:100%;border-radius:8px;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.sleeve .cat{display:flex;justify-content:space-between;font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.sleeve h3{font-size:clamp(48px,5.4vw,80px);line-height:.82}
+.sleeve p{font-size:15px;max-width:32ch;margin-top:12px}
+.sleeve .host{font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:10px;margin-top:14px}
+.sleeve .meta{position:relative;z-index:1}
+.s1{background:var(--egg);color:#04170e}
+.s1 .mic{position:absolute;top:0;right:22%;width:2px;height:42%;background:#04170e;transform-origin:top;animation:swing 3s ease-in-out infinite alternate}
+.s1 .mic::after{content:"";position:absolute;left:50%;bottom:-36px;transform:translateX(-50%);width:26px;height:42px;border-radius:13px;background:#04170e}
+@keyframes swing{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.s2{background:#1a0b02;color:var(--egg);border:1px solid rgba(255,117,0,.3)}
+.s2 h3 span{color:var(--b3)}
+.s2 .orb{position:absolute;width:170px;aspect-ratio:1;border-radius:50%;filter:blur(2px);mix-blend-mode:screen;animation:orbit 7s ease-in-out infinite alternate}
+.s2 .orb.a{background:var(--b2);right:-30px;top:20px}
+.s2 .orb.b{background:var(--b4);right:50px;top:70px;animation-delay:-3s}
+@keyframes orbit{to{transform:translate(-30px,20px) scale(1.1)}}
+.s3{background:#04170e;color:var(--egg);border:1px solid var(--line)}
+.s3 .tape{position:absolute;top:28px;right:-44px;transform:rotate(35deg);background:var(--b5);color:#04170e;font-family:var(--wide);font-weight:700;font-size:9px;letter-spacing:.24em;padding:7px 64px}
+.season .foot-note{margin-top:22px;color:var(--muted);font-size:15px}
+@media (max-width:900px){.sleeves{grid-template-columns:1fr}.sleeve{aspect-ratio:auto;min-height:340px}}
+
+/* ---------- Get in ---------- */
+.getin{padding-block:clamp(80px,10vw,140px);border-top:1px solid var(--line)}
+.getin h2{font-size:clamp(64px,10vw,150px)}
+.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(40px,5vw,64px)}
+.door{position:relative;border-radius:20px;padding:clamp(24px,2.8vw,36px);display:flex;flex-direction:column;gap:16px;min-width:0;background:#06140d;border:1px solid var(--line);overflow:hidden}
+.door::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--c)}
+.door .k{font-family:var(--wide);font-weight:700;font-size:10px;letter-spacing:.18em;color:var(--c)}
+.door h3{font-size:clamp(40px,4.2vw,58px)}
+.door p{color:var(--muted)}
+.addr{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(240,233,220,.06);border-radius:12px;padding:12px 12px 12px 16px;font-family:var(--sub);font-weight:500;font-size:15px;min-width:0}
+.addr code{font-family:inherit;user-select:all;overflow-wrap:anywhere}
+.copybtn{flex:none;font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:9.5px;background:var(--egg);color:#04170e;border:0;border-radius:999px;padding:9px 12px;cursor:pointer}
+.handles{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.handles a{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:12px;background:rgba(240,233,220,.06);text-decoration:none;font-family:var(--sub);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:14px}
+.handles a span{font-family:var(--body);font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)}
+.partners{margin-top:clamp(56px,7vw,100px);display:flex;flex-wrap:wrap;gap:16px 44px;align-items:baseline}
+.partners b{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(28px,3vw,42px)}
+@media (max-width:900px){.doors{grid-template-columns:1fr}}
+
+footer{background:#010603;padding-block:60px calc(40px + env(safe-area-inset-bottom,0px));position:relative;z-index:3;overflow:hidden}
+.giant{font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(66px,16vw,250px);line-height:.8;white-space:nowrap;background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.9;margin-bottom:44px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px}
+.foot img{height:70px;width:auto}
+.foot small{color:var(--muted);font-size:13px;line-height:1.6}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--egg);color:#04170e;font-family:var(--wide);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:11px;padding:13px 20px;border-radius:999px;opacity:0;transition:all .25s;pointer-events:none;z-index:80}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="mark" href="#home" aria-label="Flavour FM home"><img src="/img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676"></a>
+    <nav aria-label="Main">
+      <a href="#purpose">Purpose</a>
+      <a href="#spectrum">The spectrum</a>
+      <a href="#studio">The Studio</a>
+      <a href="#season">Season one</a>
+    </nav>
+    <a class="cta" href="#get-in">Get in</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<nav class="rail" id="rail" aria-label="Purpose beats">
+  <a href="#beat-1" style="--c:var(--b1)"><span>Find talent</span><b></b></a>
+  <a href="#beat-2" style="--c:var(--b2)"><span>Create and connect</span><b></b></a>
+  <a href="#beat-3" style="--c:var(--b3)"><span>Original music</span><b></b></a>
+  <a href="#beat-4" style="--c:var(--b4)"><span>Inspire more</span><b></b></a>
+  <a href="#beat-5" style="--c:var(--b5)"><span>Find their flavour</span><b></b></a>
+</nav>
+
+<main>
+  <section class="hero" id="home" data-shape="0">
+    <div class="logo3d" id="logo3d"><img src="/img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676"></div>
+    <p class="tag">Driven by sound</p>
+    <div class="specbar" aria-hidden="true"></div>
+    <p class="lede">Wingstop's home for new music. A studio to make it, stages to play it, and restaurants across the UK and Ireland to get it heard.</p>
+    <span class="scrollcue">Scroll to tune in</span>
+  </section>
+
+  <section class="manifesto" id="purpose" data-shape="0">
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--b1)"><i></i>Why Flavour FM exists</span>
+      <p class="big reveal" style="margin-top:26px">Great music starts small. <span>A voice in a bedroom. A beat on a phone. A crowd that doesn't know yet.</span></p>
+      <p class="side reveal">Flavour FM is how Wingstop backs that moment for the long run. Five things we do, over and over, for as long as there is new sound to hear.</p>
+    </div>
+  </section>
+
+  <section class="beat" id="beat-1" data-shape="1" style="--c:var(--b1)">
+    <div class="wrap"><div class="panel reveal">
+      <span class="no">01 / 05</span>
+      <h2>Find <em>talent.</em></h2>
+      <p class="copy">In every city there's someone the industry hasn't caught yet. Our creative leads, partners and crews are out in the scenes, listening for the sound before the numbers arrive.</p>
+      <div class="chips"><span>Scouting</span><span>Open submissions</span><span>Partner scenes</span></div>
+    </div></div>
+  </section>
+
+  <section class="beat right" id="beat-2" data-shape="2" style="--c:var(--b2)">
+    <div class="wrap"><div class="panel reveal">
+      <span class="no">02 / 05</span>
+      <h2>Create <em>&amp; connect.</em></h2>
+      <p class="copy">Talent grows in company. We give artists the room, the kit and the time, then put them next to producers, writers and creators they would never otherwise meet.</p>
+      <div class="chips"><span>Studio time</span><span>Writing camps</span><span>Collabs</span></div>
+      <div class="shot"><figure><img src="/img/crew.jpg" alt="Two friends in caps grinning at the camera" loading="lazy"></figure><figure><img src="/img/crowd-cheers.jpg" alt="Friends raising their cups together" loading="lazy"></figure></div>
+    </div></div>
+  </section>
+
+  <section class="beat" id="beat-3" data-shape="3" style="--c:var(--b3)">
+    <div class="wrap"><div class="panel reveal">
+      <span class="no">03 / 05</span>
+      <h2>Original <em>music.</em></h2>
+      <p class="copy">Everything that comes out of Flavour FM is new. Original tracks, original shows and original sessions, credited to the people who made them and released where their fans listen.</p>
+      <div class="chips"><span>Records</span><span>Sessions</span><span>Shows</span></div>
+    </div></div>
+  </section>
+
+  <section class="beat right" id="beat-4" data-shape="4" style="--c:var(--b4)">
+    <div class="wrap"><div class="panel reveal">
+      <span class="no">04 / 05</span>
+      <h2>Inspire <em>more.</em></h2>
+      <p class="copy">One artist's breakthrough becomes the next kid's reason to start. We take every story home, with takeovers in their own city and workshops with Youth Music, so the ripple keeps going.</p>
+      <div class="chips"><span>Home-city takeovers</span><span>The Academy</span><span>Live nights</span></div>
+      <div class="shot"><figure><img src="/img/night-out.jpg" alt="A fan cheering at a launch night" loading="lazy"></figure><figure><img src="/img/first-bite.jpg" alt="Two friends mid-bite at a Wingstop table" loading="lazy"></figure></div>
+    </div></div>
+  </section>
+
+  <section class="beat" id="beat-5" data-shape="5" style="--c:var(--b5)">
+    <div class="wrap"><div class="panel reveal">
+      <span class="no">05 / 05</span>
+      <h2>Find their <em>flavour.</em></h2>
+      <p class="copy">The point of all of it. A sound that's unmistakably theirs, and the confidence to keep making it. When an artist finds their flavour, everyone around them hears it.</p>
+      <div class="chips"><span>Identity</span><span>Confidence</span><span>Longevity</span></div>
+    </div></div>
+  </section>
+
+  <section class="summary" id="spectrum" data-shape="5">
+    <div class="wrap">
+      <span class="eyebrow"><i class="spec-dot" style="background:var(--b3);color:var(--b3)"></i>The Flavour Spectrum</span>
+      <h2 style="margin-top:22px">Five bands. <span class="spec-text">One frequency.</span></h2>
+      <div class="bands">
+        <article class="band" style="--c:var(--b1);--h:30%"><span class="k">BAND 01</span><h3>Find<br>talent</h3></article>
+        <article class="band" style="--c:var(--b2);--h:45%"><span class="k">BAND 02</span><h3>Create &amp;<br>connect</h3></article>
+        <article class="band" style="--c:var(--b3);--h:62%"><span class="k">BAND 03</span><h3>Original<br>music</h3></article>
+        <article class="band" style="--c:var(--b4);--h:78%"><span class="k">BAND 04</span><h3>Inspire<br>more</h3></article>
+        <article class="band" style="--c:var(--b5);--h:95%"><span class="k">BAND 05</span><h3>Find their<br>flavour</h3></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="studio-intro" id="studio" data-shape="6">
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--b1)"><i></i>Flavour FM Studios · Wingstop HQ, London</span>
+      <h2 style="margin-top:20px">Step <em>inside.</em></h2>
+      <p>A professional three-room studio inside Wingstop HQ, built in partnership with Youth Music. Made for first sessions and finished records.</p>
+    </div>
+  </section>
+
+  <section class="studio" aria-label="The studio in detail">
+    <div class="wrap">
+      <span class="eyebrow"><i></i>The room</span>
+      <h3 style="margin-top:18px">Three rooms. One goal: get it made.</h3>
+      <div class="rooms">
+        <article class="room"><span class="k">ROOM 01</span><h4>Live room</h4><p>Space to play together. Tracking, rehearsals and sessions shot for camera.</p><div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+        <article class="room"><span class="k">ROOM 02</span><h4>Control room</h4><p>Where the record takes shape. Production, mixing and playback with the people who made it.</p><div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+        <article class="room"><span class="k">ROOM 03</span><h4>Booth</h4><p>Vocals, voice and conversation. Built for the mic, from the first take to the interview.</p><div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+      </div>
+      <div class="shots">
+        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>The live room</strong>Studio photography coming soon</p></div>
+        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>The desk</strong>Coming soon</p></div>
+        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>The booth</strong>Coming soon</p></div>
+        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>On the walls</strong>Coming soon</p></div>
+        <div class="frame"><span class="rec"><i></i>REC</span><p><strong>Session days</strong>Coming soon</p></div>
+      </div>
+      <div class="split">
+        <div>
+          <h3>Who it's for</h3>
+          <ul class="who">
+            <li>Rising artists <span>Writing, recording, finishing</span></li>
+            <li>Producers <span>Beats, mixes, collabs</span></li>
+            <li>Creators &amp; hosts <span>Shows, interviews, shorts</span></li>
+            <li>The Academy <span>Workshops with Youth Music</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>How a session works</h3>
+          <ol class="steps">
+            <li><div><strong>Request</strong><span>Tell us who's coming, what you're making and when suits.</span></div></li>
+            <li><div><strong>Review</strong><span>Our team reads every request and comes back to you by email.</span></div></li>
+            <li><div><strong>Sign</strong><span>Studio agreement and house rules. Filming consent is separate and always your call.</span></div></li>
+            <li><div><strong>In the room</strong><span>Turn up, plug in, make the thing.</span></div></li>
+          </ol>
+          <p class="note">Every session is a request until we confirm it. Under 18? You're welcome here. Sessions need a parent or guardian's consent and a supervising adult in the room.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="after">
+    <section class="season" id="season">
+      <div class="wrap">
+        <span class="eyebrow" style="color:var(--b3)"><i></i>Season one</span>
+        <h2 style="margin-top:22px">Three shows.<br>On repeat.</h2>
+        <div class="sleeves" id="sleeves">
+          <article class="sleeve s1"><span class="mic" aria-hidden="true"></span>
+            <div class="cat"><span>FFM 001</span><span>Weekly</span></div>
+            <div class="meta"><h3>The<br>Hanging<br>Mic</h3><p>One mic, hung from above. Step up, say your piece, no second take.</p><p class="host">With LockdownT</p></div>
+          </article>
+          <article class="sleeve s2"><span class="orb a" aria-hidden="true"></span><span class="orb b" aria-hidden="true"></span>
+            <div class="cat"><span>FFM 002</span><span>Fortnightly</span></div>
+            <div class="meta"><h3>Flavour<br><span>Fusion</span></h3><p>Two scenes, one session, one new track. Each named after the flavour clash that sparked it.</p><p class="host">Original music</p></div>
+          </article>
+          <article class="sleeve s3"><span class="tape" aria-hidden="true">STAFF ONLY</span>
+            <div class="cat"><span>FFM 003</span><span>Fortnightly</span></div>
+            <div class="meta"><h3>Back<br>of<br>House</h3><p>Long conversations with artists, recorded behind the counter of our restaurants.</p><p class="host">With BTB Max</p></div>
+          </article>
+        </div>
+        <p class="foot-note">Long-form episodes live on the Wingstop UK YouTube channel. Short cuts land on @flavourfm.</p>
+      </div>
+    </section>
+
+    <section class="getin" id="get-in">
+      <div class="wrap">
+        <span class="eyebrow" style="color:var(--b2)"><i></i>Get in</span>
+        <h2 style="margin-top:22px">Make some <span class="spec-text">noise.</span></h2>
+        <div class="doors">
+          <article class="door" style="--c:var(--b1)"><span class="k">ARTISTS</span><h3>Send us your track</h3><p>We listen to everything. Strong tracks make our restaurant playlists, and some of those artists end up in the studio.</p><div class="addr"><code id="mail1">flavourfm@lemon-pepper.co.uk</code><button class="copybtn" data-copy="mail1">Copy</button></div></article>
+          <article class="door" style="--c:var(--b3)"><span class="k">STUDIO</span><h3>Request a session</h3><p>Email us with your name, what you're making, who's coming and the dates that work. Put "Studio request" in the subject.</p><div class="addr"><code id="mail2">flavourfm@lemon-pepper.co.uk</code><button class="copybtn" data-copy="mail2">Copy</button></div></article>
+          <article class="door" style="--c:var(--b5)"><span class="k">EVERYONE</span><h3>Follow the frequency</h3><p>New drops, session clips and the next takeover near you.</p>
+            <div class="handles">
+              <a href="https://www.instagram.com/flavourfm" target="_blank" rel="noopener">Instagram <span>@flavourfm</span></a>
+              <a href="https://www.tiktok.com/@flavourfm" target="_blank" rel="noopener">TikTok <span>@flavourfm</span></a>
+              <a href="https://www.youtube.com/@WingstopUK" target="_blank" rel="noopener">YouTube <span>Wingstop UK</span></a>
+            </div>
+          </article>
+        </div>
+        <div class="partners"><span class="eyebrow muted">Made with</span><b>Youth Music</b><b>Pirate Studios</b><b>On The Radar</b></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="giant" aria-hidden="true">Driven by sound</div>
+    <div class="foot">
+      <img src="/img/flavour-fm-logo.png" alt="Flavour FM by Wingstop" width="1724" height="676">
+      <small>Flavour FM is part of Wingstop UK &amp; Ireland, in partnership with Youth Music.<br>© 2026 Lemon Pepper Holdings Ltd.</small>
+    </div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status">Copied</div>
+
+<script src="/js/three.min.js"></script>
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mobile = matchMedia('(max-width: 700px)').matches;
+
+  /* ---------- UI ---------- */
+  var top = document.getElementById('top'), mb = document.getElementById('menuBtn');
+  mb.addEventListener('click', function(){ var o = top.classList.toggle('open'); mb.setAttribute('aria-expanded', o); mb.textContent = o ? 'Close' : 'Menu'; });
+  top.querySelectorAll('nav a').forEach(function(a){ a.addEventListener('click', function(){ top.classList.remove('open'); mb.textContent = 'Menu'; }); });
+
+  var toast = document.getElementById('toast'), tt;
+  function say(m){ toast.textContent = m; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('show'); }, 1600); }
+  document.querySelectorAll('.copybtn').forEach(function(b){ b.addEventListener('click', function(){
+    var el = document.getElementById(b.dataset.copy);
+    function sel(){ var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); say('Selected'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(el.textContent).then(function(){ say('Email copied'); }, sel); else sel();
+  }); });
+
+  // Reveal on scroll (content is visible at rest; this only adds a lift)
+  var reveals = [].slice.call(document.querySelectorAll('.reveal'));
+  if ('IntersectionObserver' in window && !reduce){
+    reveals.forEach(function(el){ var r = el.getBoundingClientRect(); if (r.top > innerHeight) el.classList.add('pre'); });
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target); } }); }, { threshold: .15 });
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+
+  // Logo tilt
+  var logo = document.querySelector('#logo3d img'), mx = 0, my = 0;
+  addEventListener('pointermove', function(e){ mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; if (!reduce && logo) logo.style.transform = 'rotateY(' + (mx*18) + 'deg) rotateX(' + (-my*14) + 'deg) translateZ(20px)'; }, { passive: true });
+
+  // Sleeve tilt
+  document.querySelectorAll('.sleeve').forEach(function(s){
+    s.addEventListener('pointermove', function(e){ if (reduce) return; var r = s.getBoundingClientRect(); var x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5; s.style.transform = 'rotateY(' + (x*14) + 'deg) rotateX(' + (-y*14) + 'deg) translateZ(10px)'; });
+    s.addEventListener('pointerleave', function(){ s.style.transform = ''; });
+  });
+
+  // EQ meters: randomise timing
+  document.querySelectorAll('.meter i').forEach(function(i){ i.style.animationDuration = (0.45 + Math.random()*0.8) + 's'; i.style.animationDelay = (-Math.random()) + 's'; });
+
+  // Header + rail state
+  var rail = document.getElementById('rail'), railLinks = [].slice.call(rail.querySelectorAll('a'));
+  var beats = [1,2,3,4,5].map(function(n){ return document.getElementById('beat-' + n); });
+
+  /* ---------- 3D stage ---------- */
+  var canvas = document.getElementById('stage');
+  var shapeSecs = [].slice.call(document.querySelectorAll('[data-shape]'));
+  var gl = null;
+  try { gl = window.THREE && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')); } catch(e){}
+  if (!gl){ onScroll(); addEventListener('scroll', onScroll, { passive: true }); return; }
+
+  var N = mobile ? 4200 : 9000;
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, alpha: true, context: gl });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 1.75));
+  renderer.setSize(innerWidth, innerHeight, false);
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, .1, 100);
+  camera.position.set(0, 0, mobile ? 9 : 7.2);
+
+  var C = { lime:[.847,.965,.333], lemon:[1,.812,0], mango:[1,.459,0], atomic:[1,.231,.306], hawaii:[0,.71,.725], berry:[.565,.184,.38], egg:[.94,.913,.863], green:[.06,.36,.2] };
+  function mixc(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+  var spec = [C.lime, C.lemon, C.mango, C.atomic, C.berry, C.hawaii];
+  function spectrum(t){ t = ((t%1)+1)%1; var s = t*(spec.length-1), i = Math.floor(s); return mixc(spec[i], spec[Math.min(i+1,spec.length-1)], s-i); }
+  function rnd(a,b){ return a + Math.random()*(b-a); }
+  function gauss(){ return (Math.random()+Math.random()+Math.random()-1.5)/1.5; }
+
+  // Each shape: positions (xyz), colours (rgb), sizes
+  function makeShape(fn){ var p = new Float32Array(N*3), c = new Float32Array(N*3), s = new Float32Array(N); for (var i=0;i<N;i++){ var o = fn(i, i/N); p[i*3]=o[0];p[i*3+1]=o[1];p[i*3+2]=o[2]; c[i*3]=o[3][0];c[i*3+1]=o[3][1];c[i*3+2]=o[3][2]; s[i]=o[4]; } return { p:p, c:c, s:s }; }
+
+  var shapes = [];
+  // 0 · The frequency globe: a sphere rippled like a sound wave, painted in the full spectrum
+  shapes.push(makeShape(function(i,t){
+    var y = 1 - 2*t, r = Math.sqrt(1-y*y), th = i * 2.399963;
+    var x = Math.cos(th)*r, z = Math.sin(th)*r;
+    var w = 2.2 + .22*Math.sin(y*9) * Math.cos(th*3);
+    return [x*w, y*w, z*w, spectrum((y+1)/2*.92), rnd(.6,1.3)];
+  }));
+  // 1 · Find talent: a wide, dim crowd of points with one bright spark at the centre
+  shapes.push(makeShape(function(i,t){
+    if (i < N*.05){ var g = .25*Math.pow(Math.random(),2); var a = rnd(0,6.283), b = rnd(-1,1), q = Math.sqrt(1-b*b); return [Math.cos(a)*q*g, b*g, Math.sin(a)*q*g, C.lime, rnd(1.6,3.2)]; }
+    var R = rnd(2.2, 9), a2 = rnd(0,6.283);
+    return [Math.cos(a2)*R, gauss()*2.4, Math.sin(a2)*R - 2, mixc(C.green, C.egg, Math.random()*.35), rnd(.35,.9)];
+  }));
+  // 2 · Create & connect: five studios (clusters) joined by threads of light
+  var hubs = []; for (var h=0; h<5; h++){ var ang = h/5*6.283 + .3; hubs.push([Math.cos(ang)*2.6, Math.sin(ang)*1.6, Math.sin(ang*2)*1.2]); }
+  shapes.push(makeShape(function(i,t){
+    if (i < N*.55){ var hb = hubs[i%5], r = .55*Math.cbrt(Math.random()), a = rnd(0,6.283), b = rnd(-1,1), q = Math.sqrt(1-b*b);
+      return [hb[0]+Math.cos(a)*q*r, hb[1]+b*r, hb[2]+Math.sin(a)*q*r, mixc(C.lemon, C.egg, Math.random()*.3), rnd(.7,1.5)]; }
+    var A = hubs[i%5], B = hubs[(i*7+2)%5]; if (A===B) B = hubs[(i+1)%5]; var u = Math.random();
+    return [A[0]+(B[0]-A[0])*u + gauss()*.03, A[1]+(B[1]-A[1])*u + gauss()*.03, A[2]+(B[2]-A[2])*u + gauss()*.03, mixc(C.lemon, C.mango, u*.5), rnd(.35,.7)];
+  }));
+  // 3 · Original music: a circular EQ, 72 bars radiating out like a record being cut
+  var bars = 72, bh = []; for (var k=0;k<bars;k++) bh.push(.4 + Math.pow(Math.abs(Math.sin(k*.37)*Math.cos(k*.13)),.7)*2.1);
+  shapes.push(makeShape(function(i,t){
+    var k = i % bars, a = k/bars*6.283, u = Math.random(), r0 = 1.25, r = r0 + u*bh[k];
+    return [Math.cos(a)*r + gauss()*.02, Math.sin(a)*r + gauss()*.02, gauss()*.08, mixc(C.mango, C.lemon, u*.6), rnd(.6,1.3)];
+  }));
+  // 4 · Inspire more: ripples spreading outward across a tilted plane
+  shapes.push(makeShape(function(i,t){
+    var ring = Math.floor(Math.random()*7), r = .4 + ring*.75 + gauss()*.05, a = rnd(0,6.283);
+    var x = Math.cos(a)*r, z = Math.sin(a)*r;
+    return [x, z*.42 - .2 + Math.sin(r*2.2)*.12, z*.9, mixc(C.atomic, C.berry, ring/7), rnd(.5,1.2) * (1 - ring*.06)];
+  }));
+  // 5 · Find their flavour: a twisting torus knot wearing the whole spectrum
+  shapes.push(makeShape(function(i,t){
+    var P = 2, Q = 3, u = t*6.283*1, rr = Math.cos(Q*u) + 2.2;
+    var cx = rr*Math.cos(P*u), cy = rr*Math.sin(P*u), cz = -Math.sin(Q*u);
+    var tube = .32*Math.sqrt(Math.random()), a = rnd(0,6.283);
+    var sc = .78;
+    return [ (cx + Math.cos(a)*tube)*sc, (cy + Math.sin(a)*tube)*sc, (cz*1.2 + Math.sin(a+1)*tube)*sc, spectrum(t), rnd(.6,1.35)];
+  }));
+  // 6 · The studio: a room drawn in light, with a floor grid and a mic in the middle
+  shapes.push(makeShape(function(i,t){
+    var W=3.2, H=1.9, D=2.6, f = Math.random();
+    if (f < .55){ // edges of the room
+      var e = Math.floor(Math.random()*12), u = rnd(-1,1), pts = [
+        [u*W,-H,-D],[u*W,H,-D],[u*W,-H,D],[u*W,H,D],[-W,u*H,-D],[W,u*H,-D],[-W,u*H,D],[W,u*H,D],[-W,-H,u*D],[W,-H,u*D],[-W,H,u*D],[W,H,u*D]][e];
+      return [pts[0], pts[1], pts[2], mixc(C.lime, C.egg, .25), rnd(.5,1)];
+    }
+    if (f < .85){ // floor grid
+      var gx = Math.round(rnd(-6,6))/6*W, gz = rnd(-D,D); if (Math.random()<.5){ var tmp = gx; gx = rnd(-W,W); gz = Math.round(rnd(-5,5))/5*D; }
+      return [gx, -H, gz, C.green.map(function(v){ return v*2.2; }), rnd(.4,.8)];
+    }
+    // hanging mic: cable + capsule
+    if (f < .93) return [gauss()*.01, rnd(-.1, H), gauss()*.01, C.egg, rnd(.4,.7)];
+    var a = rnd(0,6.283), b = rnd(-1,1), q = Math.sqrt(1-b*b);
+    return [Math.cos(a)*q*.18, -.35 + b*.32, Math.sin(a)*q*.18, C.lime, rnd(.8,1.6)];
+  }));
+
+  var geo = new THREE.BufferGeometry();
+  var pos = new Float32Array(N*3), col = new Float32Array(N*3), siz = new Float32Array(N), seed = new Float32Array(N);
+  for (var i=0;i<N;i++) seed[i] = Math.random();
+  pos.set(shapes[0].p); col.set(shapes[0].c); siz.set(shapes[0].s);
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+  geo.setAttribute('aSize', new THREE.BufferAttribute(siz, 1));
+  geo.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1));
+
+  var mat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms: { uTime: { value: 0 }, uPix: { value: renderer.getPixelRatio() }, uPulse: { value: 0 }, uShape: { value: 0 } },
+    vertexShader: [
+      'attribute vec3 aColor; attribute float aSize; attribute float aSeed;',
+      'uniform float uTime; uniform float uPix; uniform float uPulse; uniform float uShape;',
+      'varying vec3 vColor; varying float vAlpha;',
+      'void main(){',
+      '  vec3 p = position;',
+      '  float l = length(p);',
+      '  float wob = sin(uTime*1.6 + aSeed*6.2831 + l*2.4);',
+      '  p += normalize(p + 0.0001) * wob * (0.035 + uPulse*0.12);',
+      '  p.y += sin(uTime*0.6 + aSeed*12.0) * 0.03;',
+      '  vec4 mv = modelViewMatrix * vec4(p, 1.0);',
+      '  gl_Position = projectionMatrix * mv;',
+      '  float tw = 0.75 + 0.25*sin(uTime*3.0 + aSeed*40.0);',
+      '  gl_PointSize = aSize * uPix * (28.0 / -mv.z) * tw;',
+      '  vColor = aColor; vAlpha = clamp(1.4 - (-mv.z)/16.0, 0.15, 1.0);',
+      '}'
+    ].join('\n'),
+    fragmentShader: [
+      'varying vec3 vColor; varying float vAlpha;',
+      'void main(){',
+      '  vec2 c = gl_PointCoord - 0.5; float d = length(c);',
+      '  float a = smoothstep(0.5, 0.0, d); a = pow(a, 1.6);',
+      '  gl_FragColor = vec4(vColor * (0.85 + a*0.6), a * vAlpha);',
+      '}'
+    ].join('\n')
+  });
+  var points = new THREE.Points(geo, mat);
+  var group = new THREE.Group(); group.add(points); scene.add(group);
+
+  // Scroll to shape mapping: interpolate between section centres
+  var target = 0, current = 0;
+  function centres(){ return shapeSecs.map(function(s){ var r = s.getBoundingClientRect(); return { y: r.top + r.height/2, k: +s.dataset.shape }; }); }
+  function onScroll(){
+    top.classList.toggle('solid', scrollY > 40);
+    var mid = innerHeight/2;
+    if (window.THREE && gl){
+      var cs = centres();
+      if (mid <= cs[0].y) target = cs[0].k;
+      else if (mid >= cs[cs.length-1].y) target = cs[cs.length-1].k;
+      else for (var i=0;i<cs.length-1;i++){ if (mid >= cs[i].y && mid < cs[i+1].y){ var f = (mid - cs[i].y)/(cs[i+1].y - cs[i].y); f = f*f*(3-2*f); target = cs[i].k + (cs[i+1].k - cs[i].k)*f; break; } }
+    }
+    // rail
+    var b1 = beats[0].getBoundingClientRect(), b5 = beats[4].getBoundingClientRect();
+    rail.classList.toggle('on', b1.top < innerHeight*.6 && b5.bottom > innerHeight*.4);
+    var act = -1; beats.forEach(function(b, i){ var r = b.getBoundingClientRect(); if (r.top < mid && r.bottom > mid) act = i; });
+    railLinks.forEach(function(a, i){ a.classList.toggle('active', i === act); });
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', function(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); onScroll(); });
+  onScroll(); current = target;
+
+  var last = -1, clock = 0, prevT = performance.now();
+  function blend(k){
+    var a = Math.floor(k), b = Math.min(a+1, shapes.length-1), f = k - a;
+    // order shapes as authored; non-adjacent jumps (studio to globe) go straight
+    var A = shapes[a], B = shapes[b], i, n3 = N*3;
+    for (i=0;i<n3;i++){ pos[i] = A.p[i] + (B.p[i]-A.p[i])*f; col[i] = A.c[i] + (B.c[i]-A.c[i])*f; }
+    for (i=0;i<N;i++) siz[i] = A.s[i] + (B.s[i]-A.s[i])*f;
+    geo.attributes.position.needsUpdate = true; geo.attributes.aColor.needsUpdate = true; geo.attributes.aSize.needsUpdate = true;
+  }
+  function frame(now){
+    var dt = Math.min(.05, (now - prevT)/1000); prevT = now; clock += dt;
+    current += (target - current) * Math.min(1, dt * (reduce ? 20 : 3.2));
+    if (Math.abs(current - last) > .0005){ blend(current); last = current; }
+    var pulse = Math.abs(target - current); mat.uniforms.uPulse.value = Math.min(1, pulse*2);
+    mat.uniforms.uTime.value = reduce ? 0 : clock;
+    var spin = reduce ? 0 : clock*.08;
+    // per-shape camera framing
+    var k = current;
+    var tilt = k > 3.5 && k < 4.5 ? .35 : 0;
+    group.rotation.y = spin + mx*.35;
+    group.rotation.x = -my*.2 + tilt*(1 - Math.abs(k-4)*2);
+    if (k > 2.5 && k < 3.5) group.rotation.z = Math.sin(clock*.5)*.1; else group.rotation.z *= .92;
+    var side = 0; // shift scene away from the text panel on wide screens
+    if (!mobile){ var sides = [0,1.6,-1.6,1.6,-1.6,1.6,1.4]; var a = Math.floor(k), b = Math.min(a+1,6); side = sides[a] + (sides[b]-sides[a])*(k-a); }
+    group.position.x += (side - group.position.x) * .08;
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  blend(current); requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
